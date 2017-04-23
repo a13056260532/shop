@@ -1,0 +1,178 @@
+<layout name="master"/>
+
+
+
+<!--中间开始-->
+<div id="content">
+	<div class="main">
+		<div class="tip">
+			<ul>
+				<volist name="goodsData" id="vo" offset="0" length='5'>
+					<li style="background: #fff;">
+						<a   href="{:U('home/content/index',['gid'=>$vo['gid']])}">
+							<img style=" height: 241px;" src="__ROOT__/{$vo['pic']}" alt="" />
+							<span style="display: block;color:red; text-align: center;">{$vo['gname']}</span>
+							<span style="display: block; color:red; text-align: center;">${$vo['shopprice']}</span>
+						</a>
+					</li>
+				</volist>
+
+			</ul>
+		</div>
+		<div class="hot" id="hot">
+			<h5 class="hline">
+				<span class="vline"></span>
+				<span class="tiao"></span>
+				<span class="zi">热门活动</span>
+				<span class="tiao"></span>
+				<span class="vline"></span></h5>
+		</div>
+		<ul class="part-container">
+			<li class="ac0">
+				<a href="{:U('home/content/index',['gid'=>43])}" target="_blank"><img class="js-lazyload" src="__PUBLIC__/home/images/1.webp"> </a>
+			</li>
+			<li class="ac1">
+				<a href="{:U('home/content/index',['gid'=>40])}" target="_blank"><img class="js-lazyload" src="__PUBLIC__/home/images/2.webp"> </a>
+			</li>
+			<li class="ac2">
+				<a href="{:U('home/content/index',['gid'=>24])}" target="_blank"> <img class="js-lazyload" src="__PUBLIC__/home/images/3.webp"> </a>
+			</li>
+			<li class="ac3">
+				<a href="{:U('home/content/index',['gid'=>39])}" target="_blank"> <img class="js-lazyload" src="__PUBLIC__/home/images/4.webp"> </a>
+			</li>
+			<li class="ac4">
+				<a href="{:U('home/content/index',['gid'=>44])}" target="_blank"> <img class="js-lazyload" src="__PUBLIC__/home/images/5.webp"> </a>
+			</li>
+			<li class="ac5">
+				<a href="{:U('home/content/index',['gid'=>43])}" target="_blank"> <img class="js-lazyload" src="__PUBLIC__/home/images/1.webp"> </a>
+			</li>
+		</ul>
+
+
+		<volist name="cid" id="vo" key="k" offset="0" length='3'>
+		<!--楼层一-->
+		<div class="container" id="floor{$k}">
+			<div class="part-title">{:M('category')->where("cid=$vo")->getField('cname')}</div>
+			<div class="part-hot">
+				<span class="hotsou">热搜：</span>
+				<ul>
+					<?php $path = 'data'.($k-1);$cidData = $$path;?>
+					<li>
+						<a href="{:U('home/content/index',['gid'=>$cidData[0]['gid']])}" target="_blank">{$cidData[0]['gname']}</a>
+					</li>
+					<li>|</li>
+					<li>
+						<a href="{:U('home/content/index',['gid'=>$cidData[1]['gid']])}" target="_blank">{$cidData[1]['gname']}</a>
+					</li>
+
+				</ul>
+			</div>
+			<a href="{:U('home/lists/index',['cid'=>$vo])}" target="_blank" class="indexmore">更多</a>
+		</div>
+		<div class="container">
+			<div class="part-left">
+				<a class="part-left1" href="{:U('home/content/index',['gid'=>36])}" target="_blank">
+					<img src="__PUBLIC__/home/images/flot1.webp">
+				</a>
+				<a class="part-left2" href="{:U('home/content/index',['gid'=>43])}" target="_blank">
+					<img src="__PUBLIC__/home/images/shouji.webp">
+				</a>
+			</div>
+			<div class="part-center">
+				<ul>
+					<volist name="cidData" id="vv" offset="0" length="6">
+						<li>
+						<a href="{:U('home/content/index',['gid'=>$vv['gid']])}">
+							<span class="title">{$vv['gname']}</span>
+							<span class="info">{$vv['gname']}</span>
+							<span class="price">￥{$vv['shopprice']}</span>
+							<img style="width: 164px;height: 164px;" src="__ROOT__/{$vv['pic']}" alt="" />
+						</a>
+					</li>
+					</volist>
+				</ul>
+			</div>
+			<div class="part-right">
+				<p class="part-suggest-title">热销推荐</p>
+				<div class="slideBox">
+					<div class="slider-film">
+						<volist name="cidData" id="vvv" offset="0" length="4">
+						<a href="{:U('home/content/index',['gid'=>$vvv['gid']])}">
+							<dl>
+								<dt><img src="__ROOT__/{$vvv['pic']}" > </dt>
+								<dd class="title">{$vvv['gname']}</dd>
+								<dd class="info">{$vvv['gname']}</dd>
+								<dd class="price"><i class="yen">￥</i>{$vvv['shopprice']}</dd>
+							</dl>
+						</a>
+						</volist>
+					</div>
+					<div class="slider-film">
+						<volist name="cidData" id="vvv" offset="4" length="4">
+							<a href="{:U('home/content/index'),['gid'=>$vvv['gid']]}">
+								<dl>
+									<dt><img src="__ROOT__/{$vvv['pic']}" > </dt>
+									<dd class="title">{$vvv['gname']}</dd>
+									<dd class="info">{$vvv['gname']}</dd>
+									<dd class="price"><i class="yen">￥</i>{$vvv['shopprice']}</dd>
+								</dl>
+							</a>
+						</volist>
+					</div>
+				</div>
+				<div class="slide-point">
+					<a href="javascript:;" class="curr-point"></a>
+					<a href="javascript:;"></a>
+				</div>
+
+			</div>
+		</div>
+		</volist>
+
+
+		<!--新品速递-->
+		<div class="newproduct" id="newproduct">
+			<div class="part-title">新品速递</div>
+			<ul class="newproduct-list">
+				<foreach name="allGoodsData" item="vvvv">
+					<li>
+					<a href="{:U('home/content/index',['gid'=>$vvvv['gid']])}" class="new-item">
+						<dl>
+							<dt><img  class="js-lazyload" src="__ROOT__/{$vvvv['pic']}"></dt>
+							<dd class="title">{$vvvv['gname']}</dd>
+							<dd class="price"><span><i class="yen">￥</i>{$vvvv['shopprice']}</span> {:date('Y-m-d',$vvvv['time'])}上新</dd>
+						</dl>
+					</a>
+				</li>
+				</foreach>
+			</ul>
+			<div class="nomore" style="display: block;">没有更多了</div>
+		</div>
+	</div>
+</div>
+<!--中间结束-->
+
+
+
+<!--左侧楼层开始-->
+<div class="floor">
+	<ul>
+		<li class="on1">
+			<a href="javascript:;"><span>1F<br />活动</span></a>
+		</li>
+		<li class="on2">
+			<a href="javascript:;"><span>2F<br />活动</span></a>
+		</li>
+		<li class="on3">
+			<a href="javascript:;"><span>3F<br />活动</span></a>
+		</li>
+		<li class="on5">
+			<a href="javascript:;"><span>4F<br />活动</span></a>
+		</li>
+		<li class="on6">
+			<a href="javascript:;"><span>6F<br />活动</span></a>
+		</li>
+	</ul>
+
+</div>
+<!--左侧楼层结束-->

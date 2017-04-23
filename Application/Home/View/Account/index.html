@@ -1,0 +1,373 @@
+<layout name="master"/>
+<script src="__PUBLIC__/home/js/area.js" type="text/javascript" charset="utf-8"></script>
+
+		<!--中间开始-->
+			<div class="body-center">
+				<div class="center-content">
+					<!--头部开始-->
+					<div class="content-header">
+						<p>收获地址  <span>温馨提示：为了保证您的权益，防止黄牛倒卖，订单进入正在配货状态将不能修改收货地址和发票信息！</span></p>
+					</div>
+					<!--头部结束-->
+					<!--地址选择开始-->
+					<div class="content-address">
+						<foreach name="uaddress" item="vo" key="nk">
+						<div class="consignee-item waqbz{$vo['uaid']}">
+							<span class="radio-img <?php if($nk==0){?> pitchOn<?php }?>"></span>
+							<label  class="radio">
+								<input type="radio" name="adress"  class="radio-select" value=""/><span class="e-name">{$vo['uname']}</span>，<span class="city">{$vo['site']} </span><span class="city-particular">{$vo['address']}</span>，<span class="codeNumber">{$vo['tel']}</span>
+							</label>
+							<span class="compile"><a class="copyreader" uaid="{$vo['uaid']}" href="javascript:;">编辑</a>|<a class="deladdress" uaid="{$vo['uaid']}" href="javascript:;">删除</a></span>
+						</div>
+						</foreach>
+
+						<!--添加新地址-->
+						
+						<div class="consignee-item new-ress">
+							<span class="radio-img"></span>
+							<label for="adress3" class="radio"><input type="radio" name="adress" id="adress3" class="radio-select"  value=""/>使用新地址</label>
+						</div>
+						<!--添加地址框-->
+						<div class="add-address new">
+							<form action="" method="post" id="csaq" onsubmit="return setaddress(this)">
+								<div class="s-name">
+									<h3 class="style"><b>*</b>收货人姓名</h3>
+									<input type="text" class="public" name="uname"  placeholder="收货人姓名" value="" />
+								</div>
+								<div class="address-s">
+									<h3 class="style"><b>*</b>所在地区</h3>
+
+									<!--城市联动-->
+									<select name="" id="area1"></select>
+									<select name="" id="area2"></select>
+									<select name="" id="area3"></select>
+									<br/>
+									<!--<input type="text" name="name" id="name" placeholder="收货人姓名" value="" />-->
+									<input type="text" name="site" readonly id="aq_addressa">
+									<br/>
+									<h3 class="style"><b>*</b>详细地址</h3>
+									<textarea id="waq_address_text" name="address" placeholder="路名或街道地址，门牌号 " rows="6"  style="width: 20%;"></textarea>
+								</div>
+								
+								<div class="postcode">
+									<h3 class="style"><b>&nbsp;</b>邮政编码</h3>
+									<input type="text" class="public" name="postcode"  placeholder="6位邮政编码" value="" />
+								</div>
+								<div class="shouji">
+									<h3 class="style"><b>*</b>手机号码 </h3>
+									<input type="text" class="public" name="tel"  placeholder="11位手机号码" value="" />
+								</div>
+								<div>
+									<h3 class="style"><b>*</b>是否设为默认地址</h3>
+									<div class="radio">
+										<label>
+											<input type="radio" name="is_m"  value="1" checked="checked">
+											是
+										</label>
+										<label>
+											<input type="radio" name="is_m"  value="0" >
+											否
+										</label>
+									</div>
+								</div>
+								<input type="hidden" name="id">
+									<div class="btn-group">
+										<input type="submit"  class="btn"  value="保存"/>
+										<a href="javascript:;" class="btn-qu btn">取消</a>
+									</div>
+								
+							</form>
+						</div>
+						<input type="hidden" id="uaid" value="{$uaddress[0]['uaid']}">
+						<!--添加地址按钮-->
+						<a href="javascript:;" class="new-address"></a>
+						<!--添加新地址结束-->
+						<!--&lt;!&ndash;编辑开始&ndash;&gt;-->
+						<!--<div class="add-address edit">-->
+							<!--<form id="csaqtwo" action="" method="post">-->
+								<!--<div class="s-name">-->
+									<!--<h3 class="style"><b>*</b>收货人姓名</h3>-->
+									<!--<input type="text" class="public" name="uname"  placeholder="收货人姓名" value="" />-->
+								<!--</div>-->
+								<!--<div class="address-s">-->
+									<!--<h3 class="style"><b>*</b>地址</h3>-->
+
+									<!--&lt;!&ndash;城市联动&ndash;&gt;-->
+									<!--&lt;!&ndash;<input type="text" name="name" id="name" placeholder="收货人姓名" value="" />&ndash;&gt;-->
+									<!--<textarea name="particular" placeholder="路名或街道地址，门牌号"  rows="" cols=""></textarea>-->
+								<!--</div>-->
+								<!---->
+								<!--<div class="postcode">-->
+									<!--<h3 class="style"><b>&nbsp;</b>邮政编码</h3>-->
+									<!--<input type="text" class="public" name="postcode" placeholder="6位邮政编码" value="" />-->
+								<!--</div>-->
+								<!--<div class="shouji">-->
+									<!--<h3 class="style"><b>*</b>手机号码 </h3>-->
+									<!--<input type="text" class="public" name="tel"  placeholder="11位手机号码" value="" />-->
+								<!--</div>-->
+									<!--<div class="btn-group">-->
+										<!--<input type="submit"  class="btn" id="btn-bao" value="保存"/>-->
+										<!--<a href="javascript:;" class="btn-qu btn">取消</a>-->
+									<!--</div>-->
+								<!---->
+							<!--</form>-->
+						<!--</div>-->
+					</div>
+					<!--地址选择结束-->
+					
+					
+					<!--选项开始-->
+					<div class="options">
+						<div class="options-all">
+							<div class="payment options-public">
+								<h3>支付方式</h3>
+							</div>
+							<div class="consignee-item new-ress">
+								<span class="radio-img pitchOn"></span>
+								<label for="payment" class="radio w122"><input type="radio" name="payment" id="payment" class="radio-select"  value=""/>在线支付</label>
+							</div>
+						</div>
+						<div class="options-all">
+							<div class="distribution options-public">
+								<h3>配送方式</h3>
+							</div>
+							<div class="consignee-item new-ress">
+								<span class="radio-img pitchOn"></span>
+								<label for="distribution" class="radio w122"><input type="radio" name="distribution" id="distribution" class="radio-select"  value=""/>免费配送</label>
+							</div>
+						</div>
+						<div class="options-all invoice">
+							<div class=" options-public">
+								<h3>发票信息</h3>
+							</div>
+							<div class="box-all" style="overflow: hidden;">
+								<div class="consignee-item new-ress left">
+									<span class="radio-img pitchOn"></span>
+									<label for="invoice" class="radio w122 no"><input type="radio" name="invoice" id="invoice" class="radio-select "  value=""/>不开发票</label>
+								</div>
+								<div class="consignee-item new-ress left">
+									<span class="radio-img "></span>
+									<label for="invoice1" class="radio w122 yes"><input type="radio" name="invoice" id="invoice1" class="radio-select "  value=""/>普通发票</label>
+									
+								</div>
+							</div>
+							<div class="con">
+								<div class="text">发票内容：购买商品明细</div>
+								<div class="text">发票抬头：请确认单位名称正确，以免因名称错误耽搁您的报销。</div>
+								<div class="box-all" style="overflow: hidden; margin-top: 10px;">
+									<a href="javascript:;" class="geren tongyong active">个人</a>
+									<a href="javascript:;" class="danwei tongyong">单位</a>
+								</div>
+								<div class="danweiname" >
+									<div class="text">单位名称：</div>
+									<input type="text" name="danweiname" id="danweiname" value="" />
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<!--选项结束-->
+					<div class="options-all  goods">
+							<div class="qingdan options-public" style="border: none;">
+								<h3>商品清单</h3>
+							</div>
+							<div class="goodsList">
+								<div class="title">
+									<ul>
+										<li class="l1">商品名称</li>
+										<li class="l2">单价</li>
+										<li class="l3">数量</li>
+										<li class="l4">合计</li>
+									</ul>
+								</div>
+							</div>
+							
+							<div class="goods-cont">
+								<ul>
+									<script>
+                                        allmomey = 0;
+									</script>
+									<foreach name="goodsid"  item="vo">
+									<li style="padding: 13px;">
+										<div class="gc1">
+											<img src="__ROOT__/{$_SESSION['cart']['goods'][$vo]['options']['img']}"/>
+											<span>{$_SESSION['cart']['goods'][$vo]['name']}(<foreach name="_SESSION['cart']['goods'][$vo]['options']['options']" item="v" key="k">{$k}:{$v} &nbsp;</foreach>)</span>
+										</div>
+										<div class="gc2">
+											 ¥
+											 <span>{$_SESSION['cart']['goods'][$vo]['price']}</span>
+										</div>
+										<div class="gc3">
+											X
+											<span>{$_SESSION['cart']['goods'][$vo]['num']}</span>
+										</div>
+										<div class="gc4">
+											¥
+											 <span>{$_SESSION['cart']['goods'][$vo]['total']}</span>
+										</div>
+									</li>
+										<script>
+											var allmomey = allmomey +	parseInt("<?php echo $_SESSION['cart']['goods'][$vo]['total'] ?>") ;
+										</script>
+									</foreach>
+
+								</ul>
+							</div>
+							
+							<!--总计-->
+							<div class="zongji">
+								<ul>
+									<li>
+										共<span class="color num">2</span>件
+									</li>
+									<li>
+										金额合计：<span class="allprice">1416.00</span>元
+									</li>
+									<li>
+										优惠抵扣：<span>-0.00</span>元
+									</li>
+									<li>
+										配送费：<span>0</span>元
+									</li>
+									<li style="margin-top: 15px;">
+										<h3>应付总金额：<span class="color allprice">1416.00</span>元</h3>
+									</li>
+								</ul>
+							</div>
+							<script>
+								var num = 0;
+								$('.gc3 span').each(function () {
+									num = num +parseInt($(this).html());
+                                })
+								$('.zongji ul li .num').html(num)
+								var allprice = 0;
+                                $('.gc4 span').each(function () {
+                                    allprice = allprice +parseInt($(this).html());
+                                })
+                                $('.zongji ul li .allprice').html(allprice)
+							</script>
+							<!--确认地址-->
+							<div class="mailTo">
+								<p>寄送至：<span class="m-city">{$uaddress[0]['site']}</span><span class="m-particular">{$uaddress[0]['address']}</span></p>
+								<p><span class="m-name">{$uaddress[0]['uname']}</span> (收件人) <span class="m-number">{$uaddress[0]['tel']}</span> </p>
+							</div>
+							<div class="" style="overflow: hidden;">
+								<a href="javascript:;" class="liji">立即下单</a>
+							</div>
+							
+					</div>
+					
+					
+				</div>
+			</div>
+		
+		<!--中间结束-->
+<script>
+	function setaddress(obj) {
+	    var data = $(obj).serialize();
+	    //判断是否是添加页面，如果是添加执行添加
+		if (!$(obj).is('.waq_edit')){
+		    //走到这是添加页面
+            $.post("{:u('home/account/setaddress')}",data,function (res) {
+                if (res.status==0){
+                    layer.msg(res.info, function(){
+                        //关闭后的操作
+                    });
+                }else {
+                    //隐藏元素
+                    $('.add-address.new').css('display','none');
+                    $('.content-address .consignee-item.new-ress').css('display','none');
+                    $('.new-address').css('display','block');
+                    //清空form表单
+                    $('#area1').val(0);
+                    $('#area1').trigger('change');
+                    $(obj)[0].reset();
+
+					$('.content-address .consignee-item .radio-img').removeClass('pitchOn');
+                    //把新增的地址添加到页面上
+                    var str ='<div class="consignee-item waqbz'+res.info.uaid+'">';
+                    str +='<span class="radio-img pitchOn"></span> <label  class="radio">';
+                    str +='<input type="radio" name="adress"  class="radio-select" value=""/>';
+                    str +='<span class="e-name">'+res.info.uname+'</span>，';
+                    str +='<span class="city">'+res.info.site+'</span>';
+                    str +='<span class="city-particular">'+res.info.address+'</span>，';
+                    str +='<span class="codeNumber">'+res.info.tel+'</span>';
+                    str += '</label> <span class="compile"><a class="copyreader" uaid="'+res.info.uaid+'" href="javascript:;">编辑</a>';
+                    str += '|<a class="deladdress" uaid="'+res.info.uaid+'" href="javascript:;">删除</a></span> </div>';
+                    $('.content-address').prepend(str);
+                    $('#uaid').val(res.info.uaid);
+                    $('.consignee-item').eq(0).find('.radio').trigger('click');
+                }
+            },'json')
+		}else {
+		    //走到这里就是编辑页面
+			//异步编辑数据
+            $.post("{:u('home/account/ajaxEditAddress')}",data,function (res) {
+                if (res.status==0){
+                    layer.msg(res.info, function(){
+                        //关闭后的操作
+                    });
+                }else {
+                    //隐藏元素
+                    $('.add-address.new').css('display','none');
+                    $('.consignee-item.new-ress').css('display','none');
+                    $('.new-address').css('display','block');
+                    //修改页面数据
+					$('.waqbz'+res.info.uaid).find('.radio .e-name').html(res.info.uname);
+					$('.waqbz'+res.info.uaid).find('.radio .city').html(res.info.site);
+					$('.waqbz'+res.info.uaid).find('.radio .city-particular').html(res.info.address);
+					$('.waqbz'+res.info.uaid).find('.radio .codeNumber').html(res.info.tel);
+                    //清空form表单
+                    $('#area1').val(0);
+                    $('#area1').trigger('change');
+                    $(obj)[0].reset();
+                    $('#waq_address_text').html("");
+
+                    //修改默认的选中地址
+                    $('.m-city').html(res.info.site);
+                    $('.m-particular').html(res.info.address);
+                    $('.m-name').html(res.info.uname);
+                    $('.m-number').html(res.info.tel);
+
+                }
+            });
+		}
+		return false;
+    }
+
+	//立即下单
+    $('.liji').click(function () {
+        var uaid = $('#uaid').val();
+        var total = $('.color.allprice').html();
+		$.post("{:u('home/account/ajaxSetOrder',['goodsid'=>$_GET['goodsid']])}",{uaid:uaid,total:allmomey},function (res) {
+			if (res.status==0){
+                layer.msg(res.info, function(){
+                    //关闭后的操作
+                });
+			}else {
+			    location.href="{:U('home/account/checkoutSuccess')}"+'?number='+res.info.number+'&total='+res.info.total;
+			}
+        })
+    });
+    //点击删除
+    $('.content-address').on('click','.deladdress',function () {
+        var uaid  = $(this).attr('uaid');
+        var THIS = $(this);
+        //判断是否是编辑的状态下
+        var display =$('.add-address.new').css('display');
+        if(display != 'none'){
+            //走到这说明正在便捷或者添加地址，所以阻止其他动作
+            layer.msg('请编辑完地址后再进行删除！', function(){
+                //关闭后的操作
+            });
+        }else {
+            //异步执行删除地址
+            $.post("{:u('home/useraddress/delAddress')}",{uaid:uaid},function (res) {
+                if (res ==1){
+                    THIS.parents('.consignee-item').remove();
+                }
+            },'json')
+        }
+    })
+
+</script>

@@ -1,0 +1,330 @@
+<layout name="master"/>
+<script src="__PUBLIC__/home/js/area.js" type="text/javascript" charset="utf-8"></script>
+
+
+<link rel="stylesheet" href="__PUBLIC__/home/css/qikoo-v.css">
+<link rel="stylesheet" href="__PUBLIC__/home/css/qikoo_user.css">
+<!--中间开始-->
+<div class="user-body">
+    <div class="user-container">
+        <div class="user-crumbs m-b-10"><a href="http://mall.360.cn/">首页</a> &gt; 我的订单</div>
+        <div class="clearfix_new">
+            <div class="user-menu m-r-20">
+                <div class="menu-title">个人中心</div>
+                <div class="menu-list"><a class="menu-item" href="{:U('home/orderList/index')}"
+                                          data-monitor="user_myorder_myorder">我的订单</a>
+                    <a class="menu-item" href="{:U('home/orderList/mylove')}" data-monitor="user_myfavorite_myfavorite">我的喜欢</a>  <a  class="menu-item item-active" href="{:u('home/useraddress/index')}"
+                                                                                                          data-monitor="user_address_address">收货地址</a></div>
+
+            </div>
+            <div class="user-main">
+                <div class="addr-box"><h1>收货地址</h1>
+                    <p id="addressUpdate" style="color:red;display:none;padding:10px">
+                        尊敬的用户，由于地址库更新，为提高物流效率，建议您尽快升级您的收货地址！</p>
+
+
+                    <div class="content-address">
+                        <foreach name="uaddress" item="vo" key="nk">
+                            <div class="consignee-item waqbz{$vo['uaid']}">
+                                <span class="radio-img <?php if($nk==0){?> pitchOn<?php }?>"></span>
+                                <label  class="radio">
+                                    <input type="radio" name="adress"  class="radio-select" value=""/><span class="e-name">{$vo['uname']}</span>，<span class="city">{$vo['site']} </span><span class="city-particular">{$vo['address']}</span>，<span class="codeNumber">{$vo['tel']}</span>
+                                </label>
+                                <span class="compile"><a class="copyreader" uaid="{$vo['uaid']}" href="javascript:;">编辑</a>|<a class="deladdress" uaid="{$vo['uaid']}" href="javascript:;">删除</a></span>
+                            </div>
+                        </foreach>
+
+                        <!--添加新地址-->
+
+                        <div class="consignee-item new-ress">
+                            <span class="radio-img"></span>
+                            <label for="adress3" class="radio"><input type="radio" name="adress" id="adress3" class="radio-select"  value=""/>使用新地址</label>
+                        </div>
+                        <!--添加地址框-->
+                        <div class="add-address new">
+                            <form action="" method="post" id="csaq" onsubmit="return setaddress(this)">
+                                <div class="s-name">
+                                    <h3 class="style"><b>*</b>收货人姓名</h3>
+                                    <input type="text" class="public" name="uname"  placeholder="收货人姓名" value="" />
+                                </div>
+                                <div class="address-s">
+                                    <h3 class="style"><b>*</b>所在地区</h3>
+
+                                    <!--城市联动-->
+                                    <select name="" id="area1"></select>
+                                    <select name="" id="area2"></select>
+                                    <select name="" id="area3"></select>
+                                    <br/>
+                                    <!--<input type="text" name="name" id="name" placeholder="收货人姓名" value="" />-->
+                                    <input type="text" name="site" readonly id="aq_addressa">
+                                    <br/>
+                                    <h3 class="style"><b>*</b>详细地址</h3>
+                                    <textarea id="waq_address_text" name="address" placeholder="路名或街道地址，门牌号 " rows="6"  style="width: 20%;"></textarea>
+                                </div>
+
+                                <div class="postcode">
+                                    <h3 class="style"><b>&nbsp;</b>邮政编码</h3>
+                                    <input type="text" class="public" name="postcode"  placeholder="6位邮政编码" value="" />
+                                </div>
+                                <div class="shouji">
+                                    <h3 class="style"><b>*</b>手机号码 </h3>
+                                    <input type="text" class="public" name="tel"  placeholder="11位手机号码" value="" />
+                                </div>
+                                <div>
+                                    <h3 class="style"><b>*</b>是否设为默认地址</h3>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="is_m"  value="1" checked="checked">
+                                            是
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="is_m"  value="0" >
+                                            否
+                                        </label>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="id">
+                                <div class="btn-group">
+                                    <input type="submit"  class="btn"  value="保存"/>
+                                    <a href="javascript:;" class="btn-qu btn">取消</a>
+                                </div>
+
+                            </form>
+                        </div>
+                        <input type="hidden" id="uaid" value="{$uaddress[0]['uaid']}">
+                        <!--添加地址按钮-->
+                        <a href="javascript:;" class="new-address"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--中间结束-->
+
+
+<script>
+
+    //取消订单
+    $('.waq_qx').click(function () {
+        oid= $(this).attr('oid');
+        var THIS = $(this);
+        //异步删除数据库的订单内容
+        $.post("{:U('home/orderList/ajaxDelOrder')}",{oid:oid},function (res) {
+            if (res==1){
+                layer.alert('订单取消成功', {icon: 6});
+                THIS.parents('tbody').remove();
+            }
+        },'json')
+    });
+
+
+    function Timer(e) {
+        function t(e) {
+            this._init(e), this._runningflag
+        }
+
+        return t.prototype = {
+            _init: function (e) {
+                this.params = e
+            }, run: function () {
+                function e(e) {
+                    var t = 0, n = 0, r = 0, i = 0, s = 0;
+                    return e > 0 && (t = parseInt(e / 864e5), n = parseInt(e / 36e5 % 24), r = parseInt(e / 6e4 % 60), i = parseInt(e / 1e3 % 60), s = e % 1e3), {
+                        days: t,
+                        hours: n,
+                        minutes: r,
+                        second: i,
+                        millisecond: s
+                    }
+                }
+
+                var t = this;
+                t.params.immediately && t.params.callback(t.params.milliseconds, e(t.params.milliseconds));
+                var n = setInterval(function () {
+                    t.params.milliseconds -= t.params.interval;
+                    if (t.params.milliseconds < 0) {
+                        clearInterval(n), t.params.callback(0, e(t.params.milliseconds)), t.end();
+                        return
+                    }
+                    t.params.callback(t.params.milliseconds, e(t.params.milliseconds))
+                }, this.params.interval)
+            }, end: function () {
+                this.params.fnEnd && this.params.fnEnd()
+            }
+        }, new t(e)
+    }
+
+
+    $(function () {
+        var li = $('#ul_order_type.order_type li');
+        li.removeClass('cur,disable,enable');
+        var status = '{% int($smarty.get.status)%}';
+        li.each(function () {
+            if (status == '') {
+                status = -1;
+            }
+            var val = parseInt($(this).find('span.order_type_count').html());
+
+            if (val > 0) {
+                $(this).addClass('enable');
+                var link = $(this).find('a');
+                $(link).attr('href', $(link).data('href'));
+                if ($(this).attr("data-order_type") == 0) {
+                    $(this).find(".order_type_count").css("color", "#ff7800")
+                }
+                if ($(this).attr("data-order_type") == 3) {
+                    $(this).find(".order_type_count").css("color", "#82c92f")
+                }
+            } else if (val == 0) {
+                $(this).addClass('disable');
+            }
+
+            if (status == $(this).data('status')) {
+                $(this).removeClass('cur,disable,enable');
+                $(this).addClass("cur");
+            }
+        })
+    });
+
+
+    $(function () {
+        $('.countdonw_time').each(function () {
+            var _this = this;
+            Timer({
+                milliseconds: $(this).data('countdown_time'),
+                interval: 500,
+                immediately: true,
+                callback: function (milliseconds, desc) {
+                    $(_this).html(desc.hours + '时' + desc.minutes + "分" + desc.second + "秒")
+                },
+                fnEnd: function () {
+                    $(_this).addClass('countdonw_time_disable');
+                    $('.fukuan_info').hide();
+                }
+            }).run();
+        });
+    });
+
+    $(function () {
+        $('.fukuan_info').hover(function () {
+            var _this = this;
+            $("#countdown_tip").css({
+                left: $(_this).position().left - 100,
+                top: $(_this).position().top - 70
+            }).show();
+        }, function () {
+            $("#countdown_tip").hide();
+        });
+    });
+</script>
+<script>
+    function setaddress(obj) {
+        var data = $(obj).serialize();
+        //判断是否是添加页面，如果是添加执行添加
+        if (!$(obj).is('.waq_edit')){
+            //走到这是添加页面
+            $.post("{:u('home/account/setaddress')}",data,function (res) {
+                if (res.status==0){
+                    layer.msg(res.info, function(){
+                        //关闭后的操作
+                    });
+                }else {
+                    //隐藏元素
+                    $('.add-address.new').css('display','none');
+                    $('.consignee-item.new-ress').css('display','none');
+                    $('.new-address').css('display','block');
+                    //清空form表单
+                    $('#area1').val(0);
+                    $('#area1').trigger('change');
+                    $(obj)[0].reset();
+
+                    $('.content-address .radio-img').removeClass('pitchOn');
+                    //把新增的地址添加到页面上
+                    var str ='<div class="consignee-item waqbz'+res.info.uaid+'">';
+                    str +='<span class="radio-img pitchOn"></span> <label  class="radio">';
+                    str +='<input type="radio" name="adress"  class="radio-select" value=""/>';
+                    str +='<span class="e-name">'+res.info.uname+'</span>，';
+                    str +='<span class="city">'+res.info.site+'</span>';
+                    str +='<span class="city-particular">'+res.info.address+'</span>，';
+                    str +='<span class="codeNumber">'+res.info.tel+'</span>';
+                    str += '</label> <span class="compile"><a class="copyreader" uaid="'+res.info.uaid+'" href="javascript:;">编辑</a>';
+                    str += '|<a class="deladdress" uaid="'+res.info.uaid+'" href="javascript:;">删除</a></span> </div>';
+                    $('.content-address').prepend(str);
+
+
+                }
+            },'json')
+        }else {
+            //走到这里就是编辑页面
+            //异步编辑数据
+            $.post("{:u('home/account/ajaxEditAddress')}",data,function (res) {
+                if (res.status==0){
+                    layer.msg(res.info, function(){
+                        //关闭后的操作
+                    });
+                }else {
+
+                    //隐藏元素
+                    $('.add-address.new').css('display','none');
+                    $('.consignee-item.new-ress').css('display','none');
+                    $('.new-address').css('display','block');
+
+                    //修改页面数据
+                    $('.waqbz'+res.info.uaid).find('.radio .e-name').html(res.info.uname);
+                    $('.waqbz'+res.info.uaid).find('.radio .city').html(res.info.site);
+                    $('.waqbz'+res.info.uaid).find('.radio .city-particular').html(res.info.address);
+                    $('.waqbz'+res.info.uaid).find('.radio .codeNumber').html(res.info.tel);
+                    //清空form表单
+                    $('#area1').val(0);
+                    $('#area1').trigger('change');
+                    $(obj)[0].reset();
+                    $('#waq_address_text').html("");
+
+                }
+            });
+        }
+
+        return false;
+    }
+
+
+    $('.liji').click(function () {
+        var uaid = $('#uaid').val();
+        var total = $('.color.allprice').html();
+        $.post("{:u('home/account/ajaxSetOrder',['goodsid'=>$_GET['goodsid']])}",{uaid:uaid,total:allmomey},function (res) {
+            if (res.status==0){
+                layer.msg(res.info, function(){
+                    //关闭后的操作
+                });
+            }else {
+
+                location.href="{:U('home/account/checkoutSuccess')}"+'?number='+res.info.number+'&total='+res.info.total;
+            }
+
+        })
+    })
+    //点击删除
+    $('.content-address').on('click','.deladdress',function () {
+        var uaid  = $(this).attr('uaid');
+        var THIS = $(this);
+        //判断是否是编辑的状态下
+        var display =$('.add-address.new').css('display');
+        if(display != 'none'){
+            //走到这说明正在便捷或者添加地址，所以阻止其他动作
+            layer.msg('请编辑完地址后再进行删除！', function(){
+                //关闭后的操作
+            });
+
+        }else {
+            //异步执行删除地址
+            $.post("{:u('home/useraddress/delAddress')}",{uaid:uaid},function (res) {
+                if (res ==1){
+                    THIS.parents('.consignee-item').remove();
+                }
+            },'json')
+        }
+    })
+
+</script>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>登陆界面</title>
+		<link rel="icon" type="text/css" href="__PUBLIC__/home/shop.ico"/>
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/index.css" />
+		<script src="__PUBLIC__/home/js/jquery-1.10.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/home/js/list.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/layer/layer.js"></script>
+	</head>
+	<body>
+		<div class="regcontent">
+			<div class="layout">
+
+				<form action="" method="post" onsubmit="return login(this)">
+
+					<div class="reglogo">
+						<a href=""><img src="__PUBLIC__/home/images/timg.jpeg" /></a>
+						<span>帐号登录</span>
+					</div>
+					<div class="reginput">
+
+						<div class="username"><input type="text" name="username" placeholder="请输入用户名" required="required" /></div>
+						<div class="password"><input type="password" name="password" placeholder="请输入密码" required="required" /></div>
+						<div class="code"><input type="" name="code"  class="codeimg" placeholder="请输入验证码" required="required" /><img src="{:U('home/login/code')}" onclick="this.src=this.src+'?qw'" /></div>
+
+					</div>
+					<div class="btn"><input type="submit"  name="" value="登录" /></div>
+				</form>
+				
+				<div class="waring">
+					<span>没有账号，<a href="{:U('home/login/reg')}">请注册后登录</a></span>
+					<span><a href="{:U('home/index/index')}">直接去商城</a></span>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script>
+	function login(obj) {
+	    var data = $(obj).serialize();
+		$.post("{:U('home/login/index')}",data,function (res) {
+            if (res.status==0){
+                //信息框-例5
+                layer.msg(res.info, function(){
+                    //关闭后的操作
+                });
+            }else {
+                    location.href= res.url;
+            }
+        },'json')
+		return false;
+    }
+</script>

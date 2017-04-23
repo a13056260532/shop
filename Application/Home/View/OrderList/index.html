@@ -1,0 +1,255 @@
+<layout name="master"/>
+
+<link rel="stylesheet" href="__PUBLIC__/home/css/qikoo-v.css">
+<link rel="stylesheet" href="__PUBLIC__/home/css/qikoo_user.css">
+
+<!--中间开始-->
+<div class="user-body">
+    <div class="user-container">
+        <div class="user-crumbs m-b-10"><a href="http://mall.360.cn/">首页</a> &gt; 我的订单</div>
+        <div class="clearfix_new">
+            <div class="user-menu m-r-20">
+                <div class="menu-title">个人中心</div>
+                <div class="menu-list"><a class="menu-item item-active" href="{:U('home/orderList/index')}"
+                                          data-monitor="user_myorder_myorder">我的订单</a>
+                    <a class="menu-item" href="{:U('home/orderList/mylove')}" data-monitor="user_myfavorite_myfavorite">我的喜欢</a>  <a  class="menu-item" href="{:u('home/useraddress/index')}"
+                            data-monitor="user_address_address">收货地址</a></div>
+
+            </div>
+
+
+
+            <div class="user-main">
+                <div class="order-main clearfix_new"><h1 style="border:0"> 我的订单 <a
+                        href="http://mall.360.cn/user/myorder#" data-monitor="user_myorder_consult"
+                        onclick="showServiceSelector()" class="inline-kefu"></a> </h1>
+                    <div class="mod-user-list">
+                        <ul id="ul_order_type" class="order_type" style="margin-bottom:20px;padding:0 0 0 10px">
+                            <li data-order_type="-1" _class="cur" data-status="-1" class="enable">
+                                <a data-monitor="user_myorder_allstatus" class="order_type_title"  href="{:U('home/orderList/index',['status'=>0])}"> 全部订单<span style="display:none" class="order_type_count">1</span></a>
+                            </li>
+                            <li data-order_type="0" _class="disable" data-status="0" class="enable">
+                                <a data-monitor="user_myorder_waitpay" class="order_type_title"  href="{:U('home/orderList/index',['status'=>'未付款'])}"> 未付款<span class="order_type_count" style="color: rgb(255, 120, 0);">{$nm}</span></a>
+                            </li>
+                            <li data-order_type="1" _class="disable" data-status="1">
+                                <a data-monitor="user_myorder_waitgoods" class="order_type_title" href="{:U('home/orderList/index',['status'=>'待发货'])}" > 待发货<span class="order_type_count" style="color: rgb(255, 120, 0);" > {$df}</span></a>
+                            </li>
+                            <li data-order_type="2" _class="enable" data-status="3"><a data-monitor="user_myorder_getgoods" class="order_type_title"  href="{:U('home/orderList/index',['status'=>'已发货'])}"> 已发货<span  class="order_type_count" style="color: rgb(255, 120, 0);">{$yf}</span></a>
+                            </li>
+                            <li data-order_type="3" _class="enable" data-status="4"><a data-monitor="user_myorder_allover" class="order_type_title" href="{:U('home/orderList/index',['status'=>'已完成'])}" > 已完成<span class="order_type_count" style="color: rgb(255, 120, 0);">{$ok}</span></a>
+                            </li>
+                        </ul>
+                        <table style="" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <thead>
+                            <tr class="list-title">
+                                <th class="list-col1">订单信息</th>
+                                <th class="list-col2">订单金额</th>
+                                <th class="list-col3">订单状态</th>
+                                <th class="list-col4">操作</th>
+                            </tr>
+                            </thead>
+                            <if condition="!$orderData">
+                            <tbody>
+                            <tr>
+                                <td colspan="4" style="text-align: center;">
+                                    您暂时没有订单，请先去下单
+                                </td>
+                            </tr>
+                            </tbody>
+                                <else/>
+
+                            <foreach name="orderData" item="vo">
+                            <tbody>
+                            <tr class="list-order-info">
+                                <td colspan="4"> 订单编号： <b class="m-r-20">{$vo['number']}</b>提交时间：{:date('Y-m-d H:i:s',$vo['time'])}
+                                </td>
+                            </tr>
+                            <tr class="list-order-detail">
+                                <td>
+                                    <?php $oid=$vo['oid'];  $orderListData = M('orderlist')->where("oid=$oid")->select() ?>                                    <!--<?php dd($orderList)?>-->
+
+                                    <foreach name="orderListData" item="v">
+                                        <?php $gid= $v['gid']; $goodData = M("goods")->where("gid=$gid")->find();?>
+                                        <?php $attr = '';  ?>
+                                        <?php   $attrData = json_decode($v['options'],ture);?>
+                                        <foreach name="attrData" item="vvv" key="kkk">
+                                            <?php  $attr .=  $kkk.':'.$vvv; ?>
+                                        </foreach>
+                                        <div class="item-product clearfix_new">
+                                        <a href="{:U('home/content/index',['gid'=>$v['gid']])}" target="_blank" title="{$goodData['gname']}（{$attr}）">
+                                            <img class="item-img" src="__ROOT__/{$goodData['pic']}">
+                                        </a>
+                                        <div class="item-txt">
+
+                                            <p>
+                                                <a href="{:U('home/content/index',['gid'=>$v['gid']])}" target="_blank" title='{$goodData["gname"]}（{$attr}）'>{$goodData['gname']}（{$attr}）</a>
+                                            </p>
+                                            <p>￥{$v['subtotal']}</p></div>
+                                        <div class="item-count">x{$v['quantity']}</div>
+                                    </div>
+                                    </foreach>
+
+
+
+                                </td>
+                                <td> ￥{$vo['total']} <p class="item-fee">(运费￥0.00)</p></td>
+                                <td> {$vo['status']}</td>
+                                <td><p class="countdonw_time" data-countdown_time="6726000">1时51分47秒</p>
+                                    <p class="fukuan_info">前完成付款<img src="__PUBLIC__/home/images/t0163b13d0b9ff4f520.png"></p>
+                                    <a class="qufukuan_link mod-btn-orange" target="_blank" href="javascript:;">去付款</a>
+                                    <p><a href="javascript:;"  class="item-console">详情</a> <span class="p05">|</span>
+                                        <a href="javascript:;" oid="{$vo['oid']}"   class="console-cancel waq_qx">取消订单</a></p></td>
+                            </tr>
+                            </tbody>
+                            </foreach>
+
+                            </if>
+
+
+                        </table>
+                    </div>
+                </div>
+                <div id="countdown_tip" class="dialog_wrap">
+                    <div class="xiasanjiao">▼</div>
+                    <div class="dialog_content"><p style="width:180px">请您尽快完成付款，否则您提交的订单会自动取消！</p></div>
+                </div>
+                <div id="wuliu" class="wuliu_wrap" style="left:100px;top:100px;z-index:100">
+                    <div class="shangsanjiao">▲</div>
+                    <div class="dialog_content"><p
+                            style="border-bottom:1px solid #ececec;color:#666;font-weight:700;height:40px;line-height:40px;width:375px">
+                        <span style="display:inline-block;margin-left:35px">处理时间</span><span
+                            style="display:inline-block;margin-left:150px">订单信息</span></p>
+                        <p class="loading">数据加载中...</p>
+                        <ul class="order_info_ul"></ul>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<!--中间结束-->
+
+
+<script>
+
+
+
+
+
+    $('.waq_qx').click(function () {
+        oid= $(this).attr('oid');
+        var THIS = $(this);
+        //异步删除数据库的订单内容
+        $.post("{:U('home/orderList/ajaxDelOrder')}",{oid:oid},function (res) {
+            if (res==1){
+                layer.alert('订单取消成功', {icon: 6},function () {
+                    location.reload();
+                });
+            }
+        },'json')
+    });
+
+
+    function Timer(e) {
+        function t(e) {
+            this._init(e), this._runningflag
+        }
+
+        return t.prototype = {
+            _init: function (e) {
+                this.params = e
+            }, run: function () {
+                function e(e) {
+                    var t = 0, n = 0, r = 0, i = 0, s = 0;
+                    return e > 0 && (t = parseInt(e / 864e5), n = parseInt(e / 36e5 % 24), r = parseInt(e / 6e4 % 60), i = parseInt(e / 1e3 % 60), s = e % 1e3), {
+                        days: t,
+                        hours: n,
+                        minutes: r,
+                        second: i,
+                        millisecond: s
+                    }
+                }
+
+                var t = this;
+                t.params.immediately && t.params.callback(t.params.milliseconds, e(t.params.milliseconds));
+                var n = setInterval(function () {
+                    t.params.milliseconds -= t.params.interval;
+                    if (t.params.milliseconds < 0) {
+                        clearInterval(n), t.params.callback(0, e(t.params.milliseconds)), t.end();
+                        return
+                    }
+                    t.params.callback(t.params.milliseconds, e(t.params.milliseconds))
+                }, this.params.interval)
+            }, end: function () {
+                this.params.fnEnd && this.params.fnEnd()
+            }
+        }, new t(e)
+    }
+
+
+    $(function () {
+        var li = $('#ul_order_type.order_type li');
+        li.removeClass('cur,disable,enable');
+        var status = '{% int($smarty.get.status)%}';
+        li.each(function () {
+            if (status == '') {
+                status = -1;
+            }
+            var val = parseInt($(this).find('span.order_type_count').html());
+
+            if (val > 0) {
+                $(this).addClass('enable');
+                var link = $(this).find('a');
+                $(link).attr('href', $(link).data('href'));
+                if ($(this).attr("data-order_type") == 0) {
+                    $(this).find(".order_type_count").css("color", "#ff7800")
+                }
+                if ($(this).attr("data-order_type") == 3) {
+                    $(this).find(".order_type_count").css("color", "#82c92f")
+                }
+            } else if (val == 0) {
+                $(this).addClass('disable');
+            }
+
+            if (status == $(this).data('status')) {
+                $(this).removeClass('cur,disable,enable');
+                $(this).addClass("cur");
+            }
+        })
+    });
+
+
+    $(function () {
+        $('.countdonw_time').each(function () {
+            var _this = this;
+            Timer({
+                milliseconds: $(this).data('countdown_time'),
+                interval: 500,
+                immediately: true,
+                callback: function (milliseconds, desc) {
+                    $(_this).html(desc.hours + '时' + desc.minutes + "分" + desc.second + "秒")
+                },
+                fnEnd: function () {
+                    $(_this).addClass('countdonw_time_disable');
+                    $('.fukuan_info').hide();
+                }
+            }).run();
+        });
+    });
+
+    $(function () {
+        $('.fukuan_info').hover(function () {
+            var _this = this;
+            $("#countdown_tip").css({
+                left: $(_this).position().left - 100,
+                top: $(_this).position().top - 70
+            }).show();
+        }, function () {
+            $("#countdown_tip").hide();
+        });
+    });
+</script>

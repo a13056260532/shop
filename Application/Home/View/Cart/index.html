@@ -1,0 +1,365 @@
+<layout name="master"/>
+<style>.cartEmptyx {
+	height: 520px;
+	overflow: hidden
+}
+
+.goshopping {
+	background: #FC673E;
+	font-size: 20px;
+	height: 40px;
+	left: 340px;
+	line-height: 40px;
+	position: absolute;
+	text-align: center;
+	top: 150px;
+	width: 120px
+}
+
+.goshopping, .goshopping:hover {
+	color: #fff
+}
+
+.cartEmptyx .wrapper {
+	height: 206px;
+	margin: 157px auto 0;
+	position: relative;
+	width: 640px
+}
+
+.cartEmptyx .wrapper p {
+	color: #BEBEBE;
+	font-size: 28px;
+	left: 340px;
+	position: absolute;
+	top: 80px
+}</style>
+
+<style>
+	.nobtn {
+		display: block;
+		width: 200px;
+		text-align: center;
+		color: #fff;
+		line-height: 60px;
+		background: #ccc;
+		border: none;
+		cursor: pointer;
+	}
+	.yesbtn {
+		display: block;
+		width: 200px;
+		text-align: center;
+		color: #fff;
+		line-height: 60px;
+		background: #36aa3f;
+		border: none;
+		cursor: pointer;
+	}
+	.zaq{
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 100;
+		display: block;
+		float: left;
+		width: 22px;
+		height: 22px;
+		cursor: pointer;
+		background: #fff url("__PUBLIC__/home/images/blue.png") 0 0 no-repeat;
+	}
+	.checkbox .zaq:hover {
+		background: #fff url("__PUBLIC__/home/images/blue.png") -24px 0 no-repeat;
+	}
+	.checkbox .zaq.aq_checkon {
+		background: #fff url("__PUBLIC__/home/images/blue.png") -48px 0 no-repeat;
+	}
+
+</style>
+<!--中间开始-->
+<div id="content">
+	<if condition="!$cart['goods']">
+		<div class="cartEmptyx" >
+			<div class="wrapper"><img src="__PUBLIC__/home/images/t019eb2016764d86089.png">
+				<p>您的购物车居然是空的</p> <a href="{:U('home/index/index')}" class="goshopping">去逛逛</a></div>
+		</div>
+	<else/>
+	<form action="" method="post">
+		<div class="car main">
+			<div class="carshop">
+				<div class="cartitle">
+					<div class="carcheck">
+						<div class="checkbox">
+							<span class="zaq"></span>
+						</div>
+						全选
+					</div>
+					<div class="carname">商品名称</div>
+					<div class="carmoney">单价</div>
+					<div class="carnum">数量</div>
+					<div class="carcount">小计</div>
+					<div class="carhandle">操作</div>
+				</div>
+
+				<foreach name="cart['goods']" key="kx" item="vo">
+				<div class="shopcontent">
+					<div class="shopcheck"><div class="checkbox">
+						<span class="check" goodid="{$kx}"></span>
+						<input type="checkbox" name='checkbox' class="checkhide"/>
+					</div></div>
+					<div class="shopname">
+						<div class="carimg">
+							<a href=""><img src="__ROOT__/{$vo['options']['img']}"/></a>
+						</div>
+						<p>
+							<a href="#">{$vo['name']}</a>
+							<div>
+								<foreach name="vo['options']['options']" key="kk" item="v">
+								<span>{$kk}:{$v} </span>
+								</foreach>
+							</div>
+						</p>
+					</div>
+					<div class="shopmoney">{$vo['price']}</div>
+					<div class="shopnum">
+
+						<a href="javascript:;"  goodid="{$kx}" class="num_l">-</a>
+						<!--等等写》-->
+						<!--<input name="page" readonly cartBigNum="{$vo['options']['inventory']}" goodid="{$kx}" type="text" value="{$vo['num']}"  size="14"  onkeyup='this.value=this.value.replace(/\D/g,""); if (this.value==""){this.value=1}; onkeyupway(this)' />-->
+						<input  readonly  type="text" value="{$vo['num']}"  />
+						<a href="javascript:;" cartBigNum="{$vo['options']['inventory']}"  goodid="{$kx}" class="num_r">+</a>
+					</div>
+					<div class="shopcount">{$vo['total']}元</div>
+					<div class="shophandle"><span goodid="{$kx}">x</span></div>
+				</div>
+				</foreach>
+			</div>
+
+			<div class="jiesuan">
+				<div class="jixu"><a href="">继续购物</a></div>
+				<div class="goodsNum">共计<span>0</span>件商品</div>
+				<div class="heji">合计<span>0</span></div>
+				<div class="gou"><input id="btnsum" class="nobtn"  type="button" value="去结算"/></div>
+
+			</div>
+		</div>
+	</form>
+	</if>
+
+</div>
+</div>
+<!--中间结束-->
+<!--异步请求更新购物车数据-->
+<script>
+
+//	$('#aqp_num').blur(function () {
+//
+//    })
+//
+//	function onkeyupway(obj) {
+//	    //获取商品值
+//        var goodsID= $(obj).attr('goodid');
+//        //获取商品的数量
+//        var goodsNum = parseInt($(obj).val());
+////        alert(goodsNum);
+////        return false;
+//		//获取当前商品的最大数量
+//        var waq_bigNum =$(obj).attr('cartBigNum');
+//		//获取所选中的商品的所有的数量
+//        var allNum = parseInt($('.jiesuan  .goodsNum').find('span').html());
+//		//获取所选中的商品的所有的钱
+//        var allmoney =  parseInt($('.jiesuan  .heji').find('span').html());
+//		//获取当前商品的数量
+//        var price =parseInt($(obj).parents('.shopcontent').find('.shopmoney').html());
+//        //判断当前商品是否被选中
+//        if ($(obj).parents('.shopcontent').find('.checkbox').find('span').hasClass('checkon')){
+//            newnum = allNum+goodsNum;
+//            newmoney = allmoney+price;
+//
+//            if (goodsNum>waq_bigNum){
+//                newnum = allNum;
+//                newmoney = allmoney;
+//            }
+//            $('.jiesuan  .heji').find('span').html(newmoney);
+//            $('.jiesuan  .goodsNum').find('span').html(newnum);
+//
+//
+//        }
+//
+//        if (goodsNum>waq_bigNum){
+//            goodsNum=waq_bigNum;
+//        }
+//        $.post("{:U('home/cart/ajaxSetNum')}",{id:goodsID,num:goodsNum},function (res) {
+//
+//        },'json')
+//    }
+
+	//点击加号
+	$('.num_r').click(function () {
+        var goodsID= $(this).attr('goodid');
+        var goodsNum = parseInt($(this).siblings('input').val())+1;
+        var waq_bigNum =$(this).attr('cartBigNum');
+        var allNum = parseInt($('.jiesuan  .goodsNum').find('span').html());
+        var allmoney =  parseInt($('.jiesuan  .heji').find('span').html());
+        var price =parseInt($(this).parents('.shopcontent').find('.shopmoney').html());
+
+        if ($(this).parents('.shopcontent').find('.checkbox').find('span').hasClass('checkon')){
+            newnum=allNum+1;
+            newmoney = allmoney+price;
+
+            if (goodsNum>waq_bigNum){
+                newnum = allNum;
+                newmoney = allmoney;
+            }
+            $('.jiesuan  .heji').find('span').html(newmoney);
+            $('.jiesuan  .goodsNum').find('span').html(newnum);
+
+
+        }
+
+        if (goodsNum>waq_bigNum){
+            goodsNum=waq_bigNum;
+		}
+        $.post("{:U('home/cart/ajaxSetNum')}",{id:goodsID,num:goodsNum},function (res) {
+
+        },'json')
+
+
+    })
+	//点击减号
+    $('.num_l').click(function () {
+        var goodsID= $(this).attr('goodid');
+        var goodsNum = parseInt($(this).siblings('input').val())-1;
+        var allNum = parseInt($('.jiesuan  .goodsNum').find('span').html());
+        var allmoney =  parseInt($('.jiesuan  .heji').find('span').html());
+        var price =parseInt($(this).parents('.shopcontent').find('.shopmoney').html());
+
+
+        if ($(this).parents('.shopcontent').find('.checkbox').find('span').hasClass('checkon')){
+
+            newnum=allNum-1;
+            newmoney = allmoney-price;
+            if (goodsNum==0){
+                newnum= allNum;
+                newmoney = allmoney;
+            }
+            $('.jiesuan  .goodsNum').find('span').html(newnum);
+            $('.jiesuan  .heji').find('span').html(newmoney);
+        }
+
+
+
+        if (goodsNum==0){
+            goodsNum=1;
+		}
+        $.post("{:U('home/cart/ajaxSetNum')}",{id:goodsID,num:goodsNum},function (res) {
+
+        },'json')
+    })
+	//商品选择窗口
+	$('.check').click(function () {
+        var allNum = parseInt($('.jiesuan  .goodsNum').find('span').html());
+        var goodnum = parseInt($(this).parents('.shopcontent').find('.shopnum').find('input').val());
+        var money = parseInt($(this).parents('.shopcontent').find('.shopcount').html());
+		var allmoney =  parseInt($('.jiesuan  .heji').find('span').html());
+
+        if (!$(this).hasClass('checkon')){
+			//修改提交的按钮的样式
+			$('#btnsum').removeClass('nobtn');
+            $('#btnsum').addClass('yesbtn');
+            //给选择框加上css样式
+            $(this).addClass('checkon');
+            $('.jiesuan  .goodsNum').find('span').html(goodnum+allNum);
+            allmoney  =money+allmoney;
+            $('.jiesuan  .heji').find('span').html(allmoney);
+        }else {
+            $('.zaq').removeClass('aq_checkon');
+            allmoney = allmoney-money;
+            $('.jiesuan  .heji').find('span').html(allmoney);
+            $(this).removeClass('checkon');
+			var goodnum = allNum-goodnum;
+            $('.jiesuan  .goodsNum').find('span').html(goodnum);
+		}
+        if (!$('.check').hasClass('checkon')){
+            //设置是否可以提交购买
+            $('#btnsum').removeClass('yesbtn');
+            $('#btnsum').addClass('nobtn');
+        }
+		t=0;
+        $('.check').each(function () {
+            if ($(this).is('.checkon')){
+                t=t+1;
+            }
+        })
+		if (t=="<?php echo count($cart['goods'])?>"){
+            $('.zaq').addClass('aq_checkon');
+		}
+
+    })
+
+
+	//选择全选按钮
+	$('.zaq').click(function () {
+
+        if ($(this).is('.aq_checkon'))
+	    {
+            $('.check').each(function () {
+                    $(this).trigger('click')
+            });
+            $(this).removeClass('aq_checkon');
+		}else
+		{
+            $('.check').each(function () {
+                if (!$(this).is('.checkon')){
+                    $(this).trigger('click')
+                }
+            });
+            $(this).addClass('aq_checkon');
+        }
+    });
+
+	//判断是否选择了商品
+    $('.nobtn').click(function () {
+		var goodsid= '';
+		//循环选中的商品，选中其中的id
+    	$('.checkon').each(function () {
+			goodsid = goodsid + $(this).attr('goodid') +',';
+        });
+		var THIS= $(this);
+    	//异步存当前商品的session
+		$.post("{:U('home/cart/ajaxSetGoodId')}",{goodsid:goodsid},function (res) {
+		    str =res;
+
+			//判断商品是否被选中
+            if (THIS.is('.yesbtn')){
+                //走到这说明已经选择了商品
+            <?php if(!$_SESSION['puid']){?>
+                    location.href="<?php echo U('home/login/index')?>"
+                    <?php }else{ ?>
+                    location.href="{:U('home/account/index')}" +'?goodsid='+str;
+                <?php }?>
+
+            }else {
+                //走到这说明没有选择商品
+                layer.msg('请选择商品', function(){
+                });
+            }
+        })
+        //如果有yesbtn class
+    })
+	//执行删除商品
+    $('.shophandle span').click(function(){
+        if(confirm('确定删除吗？')){
+            //获取当前元素是否被选中,如果选中把价格删除
+            if($(this).parents('.shopcontent').find('.shopcheck').find('span').is('.checkon')){
+                $(this).parents('.shopcontent').find('.shopcheck').find('span').trigger('click');
+            }
+            var goodid =$(this).attr('goodid');
+            $.post("{:U('home/cart/delShops')}",{goodid:goodid},function (res) {
+
+            },'json')
+			location.href="{:U('home/cart/index')}";
+		}
+    });
+
+</script>

@@ -1,0 +1,133 @@
+<layout name="master"/>
+
+<script src="__PUBLIC__/home/js/1102.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/home/css/qikoo_shop_new.css">
+
+<style>
+    .continueshop{
+        background: #F65540;
+        border-radius: 3px;
+        color: #fff;
+        display: inline-block;
+        height: 48px;
+        line-height: 48px;
+        margin-top: 20px;
+        text-align: center;
+        width: 200px;
+        border-collapse: collapse;
+        position: absolute;
+        right: 20px;bottom: 20px;
+    }
+</style>
+
+<div class="mod-order-success">
+    <h2>
+        <div class="state-logo"><img src="__PUBLIC__/home/images/t01f9c13fd418241734.jpg"></div>
+        订单提交成功，请您在<b class="countdown"><span>1</span>时<span>58</span>分<span>47</span>秒</b>内完成支付
+    </h2>
+    <p class="amount"> 应付金额:<span>￥</span><span class="price">{$_GET['total']}</span></p> <a class="detail-btn detail-show" href="http://mall.360.cn/shop/ordersucc?order_id=1709508801901000006,1709508801901000007#"
+                                                                                    onclick="return false">收起详情</a>
+    <div class="order-detail" style="display: block;"><p></p>
+        <li>订单号：{$_GET['number']}<p></p></li>
+    </div>
+    <a href="{:U('home/index/index')}" class="continueshop">继续购物</a>
+</div>
+<script>var orderSuccess = (function () {
+    var interval, pageRemain, token, orderId;
+    var now = new Date();
+
+    var initDetailBtn = function () {
+        $('.detail-btn').click(function () {
+            $(this).toggleClass('detail-show').text(function (i, txt) {
+                return '收起详情订单详情'.replace(txt, '');
+            });
+            $('.order-detail').toggle();
+        });
+        $('.detail-btn').click();
+    }
+
+    var initCountdown = function () {
+        interval = setInterval(function () {
+            countdown();
+        }, 1000);
+        countdown();
+    }
+
+    var countdown = function () {
+        var timeRemain = pageRemain - (new Date() - now) / 1000;
+        // console.log(timeRemain)
+        if (timeRemain > 0) {
+            var hour = Math.floor(timeRemain / 60 / 60);
+            var minute = Math.floor(timeRemain / 60 % 60);
+            var second = Math.floor(timeRemain % 60);
+
+            $('.countdown').html('<span>' + hour + '</span>时<span>' + minute + '</span>分<span>' + second + '</span>秒');
+        } else {
+            clearInterval(interval);
+            // window.location.href = '/user/myorder'
+        }
+    }
+
+    var initPayAction = function () {
+        $('#gotopay').click(function () {
+            var type = $('[name=pay-type]:checked').val();
+            if (type) {
+                showPayDialog();
+                window.open('/sale/userpay?id=' + orderId + '&token=' + token + '&bank_code=' + type);
+            } else {
+                qikoo.dialog.alert('请选择支付方式。');
+            }
+        });
+
+        $('.payment').on('click', 'li', function () {
+            var type = $(this).find("input").val();
+            showPayDialog();
+            window.open('/sale/userpay?id=' + orderId + '&token=' + token + '&bank_code=' + type);
+            return false;
+        });
+    }
+
+    var showPayDialog = function () {
+        var tpl = [
+            '<div class="dialog-content" style="padding:10px;">',
+            '<p>请您在<b class="countdown"></b>内，在新开的网上支付页面<br>完成支付，支付完成前请不要关闭该窗口</p>',
+            '</div>',
+            '<div class="dialog-console">',
+            '<a class="console-btn-confirm" href="#" onclick="return false;">已完成付款</a>',
+            '<a class="console-btn-cancel" href="#" onclick="return false;">付款遇到问题</a>',
+            '</div>'
+        ].join('');
+
+        qikoo.dialog.show({
+            html: tpl,
+            title: '付款提示'
+        }).find('.dialog-console a').click(function () {
+            window.location.reload();
+        })
+    }
+
+    var init = function (cfg) {
+        cfg = cfg || {};
+        pageRemain = cfg.countdown | 0;
+        token = cfg.token;
+        orderId = cfg.orderId;
+
+
+        initDetailBtn();
+        initCountdown();
+        initPayAction();
+    }
+
+    return {
+        init: init
+    }
+
+})()
+
+orderSuccess.init({
+    countdown: 7145,
+    token: '0eb47360a5274609fe5d8774c46bc83b',
+    orderId: '1709508801901000006,1709508801901000007'
+});
+
+</script>

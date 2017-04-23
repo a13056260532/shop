@@ -1,0 +1,243 @@
+<layout name="master"/>
+<link rel="stylesheet" href="__PUBLIC__/home/css/qikoo-v.css">
+<link rel="stylesheet" href="__PUBLIC__/home/css/qikoo_user.css">
+
+<style>
+    .u-flyer{display: block;width: 80px;height: 80px;border-radius: 50px;position: fixed;z-index: 9999;}
+
+</style>
+<!--中间开始-->
+<div class="user-body">
+    <div class="user-container">
+        <div class="user-crumbs m-b-10"><a href="http://mall.360.cn/">首页</a> &gt; 我的订单</div>
+        <div class="clearfix_new">
+            <div class="user-menu m-r-20">
+                <div class="menu-title">个人中心</div>
+                <div class="menu-list"><a class="menu-item " href="{:U('home/orderList/index')}"
+                                          data-monitor="user_myorder_myorder">我的订单</a>
+                    <a class="menu-item item-active" href="{:U('home/orderList/mylove')}" data-monitor="user_myfavorite_myfavorite">我的喜欢</a>  <a  class="menu-item" href="{:u('home/useraddress/index')}"
+                                                                                                          data-monitor="user_address_address">收货地址</a></div>
+
+            </div>
+
+
+
+            <div class="user-main">
+                <div class="favorite_container clearfix_new"><h1 class="favorite_title"> 我的喜欢 </h1>
+                    <div class="no_like" <if condition="$loveData">style="display:none"</if> ><img src="__PUBLIC__/home/images/t01b7f2452fe1b88be0.png">
+                        <p class="no_like_txt">您暂未收藏任何商品</p></div>
+                    <if condition="$loveData">
+
+                    <ul class="favorite_list clearfix_new">
+                        <foreach name="loveData" item="vv">
+                        <li class="favorite_item" >
+                            <div class="favorite_item_img">
+                                <img src="__ROOT__/{$vv['good']['pic']}">
+                                <p class="outbox selout" style="display:none"> 售罄 </p>
+                                <p class="outbox useout" style="display:none"> 失效 </p>
+                                <p class="favorite_cheaper" style="visibility:hidden"></p></div>
+                            <p class="favorite_item_name" title="{$vv['good']['gname']}">{$vv['good']['gname']}</p>
+                            <p class="favorite_itme_price">¥{$vv['good']['shopprice']}</p>
+                            <div style="margin-bottom:20px; margin-top:20px;  ">
+                                <span class="favorite_cancelbtn" gid="{$vv['gid']}" onclick="dellove(this)">  取消    </span>
+                                <span class="favorite_addbtn" gid="{$vv['gid']}">加入购物车</span>
+                            </div>
+                        </li>
+                        </foreach>
+                    </ul>
+                    <div class="favorite_page_wrap" style="visibility:hidden">
+                        <div class="favorite_page_index clearfix_new" style="display:none">
+                            <ul class="favorite_page_btnbox clearfix_new"></ul>
+                            <p class="favorite_next_btn"> 下一页<img src="__PUBLIC__/home/images/t01b9f4170a5d141ec4.png"></p></div>
+                    </div>
+                    </if>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+</div>
+
+<!--中间结束-->
+
+
+<script src="__PUBLIC__/home/js/jquery.fly.min.js"></script>
+
+
+<script>
+
+
+
+    //点击取消异步删除数据我的喜欢
+    function dellove(obj) {
+        var gid = $(obj).attr('gid');
+        layer.msg('确定不再关注该商品？', {
+            time: 0 //不自动关闭
+            ,btn: ['确定', '取消']
+            ,yes: function(index){
+                layer.close(index);
+                //发送异步删除该商品的喜欢
+                $.post("{:U('home/orderList/ajaxDelLove')}",{gid:gid},function (res) {
+                    if (res==1){
+                        location.reload();
+                    }
+                },'json')
+
+            }
+        });
+    }
+
+
+    $('.waq_qx').click(function () {
+        oid= $(this).attr('oid');
+        var THIS = $(this);
+        //异步删除数据库的订单内容
+        $.post("{:U('home/orderList/ajaxDelOrder')}",{oid:oid},function (res) {
+            if (res==1){
+                layer.alert('订单取消成功', {icon: 6},function () {
+                    location.reload();
+                });
+            }
+        },'json')
+    });
+
+
+    function Timer(e) {
+        function t(e) {
+            this._init(e), this._runningflag
+        }
+
+        return t.prototype = {
+            _init: function (e) {
+                this.params = e
+            }, run: function () {
+                function e(e) {
+                    var t = 0, n = 0, r = 0, i = 0, s = 0;
+                    return e > 0 && (t = parseInt(e / 864e5), n = parseInt(e / 36e5 % 24), r = parseInt(e / 6e4 % 60), i = parseInt(e / 1e3 % 60), s = e % 1e3), {
+                        days: t,
+                        hours: n,
+                        minutes: r,
+                        second: i,
+                        millisecond: s
+                    }
+                }
+
+                var t = this;
+                t.params.immediately && t.params.callback(t.params.milliseconds, e(t.params.milliseconds));
+                var n = setInterval(function () {
+                    t.params.milliseconds -= t.params.interval;
+                    if (t.params.milliseconds < 0) {
+                        clearInterval(n), t.params.callback(0, e(t.params.milliseconds)), t.end();
+                        return
+                    }
+                    t.params.callback(t.params.milliseconds, e(t.params.milliseconds))
+                }, this.params.interval)
+            }, end: function () {
+                this.params.fnEnd && this.params.fnEnd()
+            }
+        }, new t(e)
+    }
+
+
+    $(function () {
+        var li = $('#ul_order_type.order_type li');
+        li.removeClass('cur,disable,enable');
+        var status = '{% int($smarty.get.status)%}';
+        li.each(function () {
+            if (status == '') {
+                status = -1;
+            }
+            var val = parseInt($(this).find('span.order_type_count').html());
+
+            if (val > 0) {
+                $(this).addClass('enable');
+                var link = $(this).find('a');
+                $(link).attr('href', $(link).data('href'));
+                if ($(this).attr("data-order_type") == 0) {
+                    $(this).find(".order_type_count").css("color", "#ff7800")
+                }
+                if ($(this).attr("data-order_type") == 3) {
+                    $(this).find(".order_type_count").css("color", "#82c92f")
+                }
+            } else if (val == 0) {
+                $(this).addClass('disable');
+            }
+
+            if (status == $(this).data('status')) {
+                $(this).removeClass('cur,disable,enable');
+                $(this).addClass("cur");
+            }
+        })
+    });
+
+
+    $(function () {
+        $('.countdonw_time').each(function () {
+            var _this = this;
+            Timer({
+                milliseconds: $(this).data('countdown_time'),
+                interval: 500,
+                immediately: true,
+                callback: function (milliseconds, desc) {
+                    $(_this).html(desc.hours + '时' + desc.minutes + "分" + desc.second + "秒")
+                },
+                fnEnd: function () {
+                    $(_this).addClass('countdonw_time_disable');
+                    $('.fukuan_info').hide();
+                }
+            }).run();
+        });
+    });
+
+    $(function () {
+        $('.fukuan_info').hover(function () {
+            var _this = this;
+            $("#countdown_tip").css({
+                left: $(_this).position().left - 100,
+                top: $(_this).position().top - 70
+            }).show();
+        }, function () {
+            $("#countdown_tip").hide();
+        });
+    });
+</script>
+
+
+<script>
+    $(function() {
+        var offset = $(".topshopcart").offset();  //结束的地方的元素
+        $(".favorite_addbtn").click(function(event){
+            var gid = $(this).attr('gid');
+            var THIS=this;
+            var addcar = $(this);
+            var img = addcar.parents('.favorite_item').find('.favorite_item_img img').attr('src');
+            var flyer = $('<img  class="u-flyer" src="'+img+'">');
+            flyer.fly({
+                start: {
+                    left: event.pageX,
+                    top: event.pageY
+                },
+                end: {
+                    left: offset.left+10,
+                    top: offset.top+10,
+                    width: 0,
+                    height: 0
+                },
+                onEnd: function(){
+                    $.post('{:U("home/content/ajaxGetCart")}',{gid:gid,lists:1},function (res) {
+                        if (res.valid==1){
+                            location.reload();
+                        }else {
+                            layer.msg(res.message, function(){
+                            });
+                        }
+                    })
+                }
+            });
+        });
+
+    });
+</script>

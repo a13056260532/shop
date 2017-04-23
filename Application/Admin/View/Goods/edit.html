@@ -1,0 +1,335 @@
+<layout name="master"/>
+<ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a href="{:u('admin/index/index')}"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#">商品添加</a></li>
+</ul>
+<div class="m-b-md">
+    <h3 class="m-b-none">商品添加</h3>
+</div>
+<section class="panel panel-default">
+    <header class="panel-heading font-bold">商品添加</header>
+    <div class="panel-body">
+        <form class="form-horizontal" method="post" action="" onsubmit="return ajaxym(this)">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">所属分类</label>
+                <div class="col-sm-10">
+
+                    <select name="cid" class="form-control m-b">
+                        <option tid="0" value="0">请选择</option>
+                        <volist name="cateData"  id="vo">
+                            <option  tid="{$vo['tid']}"  <?php if($oldGoodsData['cid']==$vo['cid']){?> selected <?php }?>value="{$vo['cid']}" >{$vo['_cname']}</option>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+
+            <div class="line line-dashed line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">所属品牌</label>
+                <div class="col-sm-10">
+                    <select name="bid" class="form-control m-b">
+                        <option value="0">请选择</option>
+                        <volist name="brandData" id="vo">
+                            <option  value="{$vo['bid']}"  <?php if($oldGoodsData['bid']==$vo['bid']){?> selected="selected" <?php }?> >{$vo['bname']}</option>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+            <div class="line line-dashed line-lg pull-in"></div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">商品名称</label>
+                <div class="col-sm-10">
+                    <input type="text" name="gname"  value="{$oldGoodsData['gname']}" class="form-control">
+                </div>
+            </div>
+            <div class="line line-dashed line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">商品货号</label>
+                <div class="col-sm-10">
+                    <input type="text" name="gnumber" value="{$oldGoodsData['gnumber']}" class="form-control">
+                    <span class="help-block m-b-none">请输入商品货号。。。</span>
+                </div>
+            </div>
+            <div class="line line-dashed line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-id-1">单位</label>
+                <div class="col-sm-10">
+                    <input type="text" name="unit" class="form-control" id="input-id-1" value="{$oldGoodsData['unit']}">
+                </div>
+            </div>
+            <div class="line line-dashed line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">市场价</label>
+                <div class="col-sm-10">
+                    <input type="number" name="marketprice" value="{$oldGoodsData['marketprice']}" class="form-control">
+                </div>
+            </div>
+            <div class="line line-dashed line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">商城价</label>
+                <div class="col-sm-10">
+                    <input type="number"  value="{$oldGoodsData['shopprice']}" class="form-control" name="shopprice" placeholder="">
+                </div>
+            </div>
+            <div class="line line-dashed line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">点击次数</label>
+                <div class="col-sm-10">
+                    <input type="number"  value="{$oldGoodsData['click']}" class="form-control" name="click" placeholder="">
+                </div>
+            </div>
+            <div class="line line-dashed line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">商品属性</label>
+                <div class="col-sm-10">
+                    <foreach  name="attrData" item="vo" >
+                    <table class="table table-hover" id="attr">
+                        <tr>
+                        <td style='text-align: right'>{$vo['taname']}:</td>
+                        <td >
+                        <select name="attr[{$vo['taid']}]" id="">
+                            <option value="0">请选择</option>
+                            <foreach name="vo['tavalue']" item="v" >
+                                <option <if condition="in_array($v,$goodAttriDate)"> selected </if>  value="{$v}">{$v}</option>
+                            </foreach>
+                        </select>
+                        </td>
+                        </tr>
+                    </table>
+                    </foreach>
+                </div>
+            </div>
+            <div class="line line-dashed line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">商品规格</label>
+                <div class="col-sm-10">
+                    <table class="table table-hover" id="spec">
+                        <foreach name="specData" item="vo">
+                        <tr>
+                            <td>{$vo['taname']}</td>
+                            <td>
+                                <select name="spec[{$vo['taid']}][spec][]" >
+                                    <option value="0">请选择</option>
+                                    <foreach name="vo['tavalue']" item="v">
+                                        <option <if condition="$vo['gavalue']==$v"> selected</if> value="{$v}">{$v}</option>
+                                    </foreach>
+                                </select>
+                            </td>
+                            <td>
+                                附加价格
+                            </td>
+                            <td>
+                                <input type="number" name="spec[{$vo['taid']}][added][]" value="{$vo['added']}">
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-xs delSpec">删除</button>
+                            </td>
+                        </tr>
+                            <script>
+                                $(function(){
+                                    $('#spec').find("tr:contains({$vo['taname']})").eq(0).find("td:last").html('<button type="button" class="btn btn-success btn-xs addSpec">添加</button>');
+                                })
+                            </script>
+                        </foreach>
+
+                    </table>
+                </div>
+            </div>
+            <div class="line line-dashed line-lg pull-in"></div>
+            <!--引入uploadify相关js、css-->
+            <style>
+                li{
+                    list-style: none;
+                }
+            </style>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">列表图</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="pic" readonly="" value="{$oldGoodsData['pic']}">
+                        <div class="input-group-btn">
+                            <button onclick="upImage(this)" class="btn btn-default" type="button">选择图片</button>
+                        </div>
+                    </div>
+                    <div class="input-group" style="margin-top:5px;">
+                        <img src="__ROOT__/{$oldGoodsData['pic']}" class="img-responsive img-thumbnail" width="150">
+                        <em class="close" style="position:absolute; top: 0px; right: -14px;" title="删除这张图片" onclick="removeImg(this)">×</em>
+                    </div>
+                </div>
+            </div>
+            <div class="line line-dashed line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">商品图册</label>
+                <div class="col-sm-10">
+                    <button onclick="upImages(this)" class="btn btn-default" type="button">选择图片</button>
+                    <style>
+                        #box li{
+                            list-style: none;
+                            float: left;
+                        }
+                    </style>
+                    <div id="box">
+                        <!--将图片数据获取到-->
+                        <?php $oldGoodsData['big']=explode('|',$oldGoodsData['big'])?>
+                        <!--遍历图片数据-->
+                        <foreach name="oldGoodsData['big']" item="vo">
+                            <li>
+                            <img  style='width: 150px;' src="__ROOT__/{$vo}"/>
+                            <input type='hidden' name='img[]' value='{$vo}'/>
+                            <button type="button" class="delManyImg">X</button>
+                            </li>
+                        </foreach>
+                    </div>
+                </div>
+                <script>
+                    //点击X按钮，删除当前li
+                    $('#box').on('click','.delManyImg',function () {
+                        $(this).parent().remove();
+                    })
+
+                </script>
+            </div>
+            <div class="line line-dashed line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">商品详情</label>
+                <div class="col-sm-10">
+                    <textarea id="container" name="intro" style="height:300px;width:100%;">{$oldGoodsData['intro']}</textarea>
+                </div>
+            </div>
+            <script>
+                util.ueditor('container', {hash:2,data:'hd'}, function (editor) {
+                    //这是回调函数 editor是百度编辑器实例
+                });
+            </script>
+            <div class="line line-dashed line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">售后服务</label>
+                <div class="col-sm-10">
+                    <textarea id="container1" name="service" style="height:300px;width:100%;">{$oldGoodsData['service']}</textarea>
+                </div>
+            </div>
+            <script>
+                util.ueditor('container1', {hash:2,data:'hd'}, function (editor) {
+                    //这是回调函数 editor是百度编辑器实例
+                });
+            </script>
+            <input type="hidden" name="tid" value="{$oldGoodsData['tid']}">
+            <button class="btn btn-twitter btn-block m-b-sm">提交</button>
+        </form>
+    </div>
+</section>
+<!--单图上传-->
+<script>
+    //上传图片
+    function upImage(obj) {
+        require(['util'], function (util) {
+            options = {
+                multiple: false,//是否允许多图上传
+            };
+            util.image(function (images) {          //上传成功的图片，数组类型 
+                $("[name='pic']").val(images[0]);
+                $(".img-thumbnail").attr('src', '__ROOT__/'+images[0]);
+            }, options)
+        });
+    }
+
+    //移除图片
+    function removeImg(obj) {
+        $(obj).prev('img').attr('src', 'resource/images/nopic.jpg');
+        $(obj).parent().prev().find('input').val('');
+    }
+</script>
+<!--多图上传-->
+<script>
+    //上传图片
+    function upImages(obj) {
+        require(['util'], function (util) {
+            options = {
+                //上传多图
+                multiple: true,
+            };
+            util.image(function (images) {
+                $(images).each(function(k,v){
+                    $("<li><img  style='width: 150px;' src=__ROOT__/"+v+" /><input type='hidden' name='img[]' value='"+v+"'/> <button type='button' class='delManyImg'>X</button></li>").appendTo('#box');
+                })
+            }, options)
+        });
+    }
+</script>
+<script>
+    $(function () {
+
+        var attrHtml = $('#attr').html();
+        var specHtml =$('#spec').html();
+        var oldCid = <?php echo $oldGoodsData['cid']?>;
+        //异步处理选中的分类的属性和规格
+        $('select[name=cid]').change(function () {
+            var tid = $(':selected').attr('tid');
+            //新增加内容
+            var cid = $(this).val();
+            if(cid==oldCid){
+                //将我们之前存好的数据，写入即可
+                $('#attr').html(attrHtml);
+                $('#spec').html(specHtml);
+                return false;
+            }
+            $('input[name=tid]').val(tid);
+            var str = '';
+            var spec = '';
+            $.post("{:U('admin/goods/ajaxGetSpec')}",{tid:tid},function (res) {
+
+                $.each(res,function (k,v) {
+                    if (v.tatype=='属性'){
+                        str +="<tr><td style='text-align: right'>"+v.taname+":</td><td>";
+                        str +='<select name="attr['+v.taid+']" ><option value="0">请选择</option>';
+                        $.each(v.tavalue,function (kk,vv) {
+                            str +='<option value="'+vv+'">'+vv+'</option>';
+                        })
+                        str +='</select></td>';
+                    }else {
+                        spec +="<tr><td style='text-align: right'>"+v.taname+":</td><td>";
+                        spec +='<select name="spec['+v.taid+'][spec][]" ><option value="">请选择</option>';
+                        $.each(v.tavalue,function (kk,vv) {
+                            spec +='<option value="'+vv+'">'+vv+'</option>';
+                        })
+                        spec +='</select></td><td>附加价格</td><td>';
+                        spec +='<input type="number" name="spec['+v.taid+'][added][]" value="0">';
+                        spec +='</td><td><button type="button" class="btn btn-success btn-xs addSpec">追加</button></td></tr>';
+                    }
+                })
+                $('#attr').html(str);
+                $('#spec').html(spec);
+            },'json')
+        })
+
+        //添加规格
+        $('#spec').on('click','.addSpec',function () {
+            var tr = $(this).parents('tr').clone();
+            //把最后一个元素的button换成删除
+            var del  = '<button type="button" class="btn btn-danger btn-xs delSpec">删除</button>';
+            tr.find('td').last().html(del);
+            //把复制的这份tr往后面追加
+            $(this).parents('tr').after(tr);
+        })
+        $('#spec').on('click','.delSpec',function () {
+            $(this).parents('tr').remove();
+        })
+
+    })
+
+</script>
+
+<script>
+    function ajaxym(obj) {
+        $data = $(obj).serialize();
+        $.post("{:U('admin/goods/edit',['gid'=>$_GET['gid']])}",$data,function (res) {
+            if (res.status){
+                util.message('添加成功',"{:U('admin/goods/lists')}",'success');
+            }else{
+                util.message(res.info,"back",'error');
+            }
+        },'json')
+        return false;
+    }
+</script>

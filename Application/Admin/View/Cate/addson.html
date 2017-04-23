@@ -1,0 +1,49 @@
+<layout name="master" />
+<ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a href="{:u('admin/index/index')}"><i class="fa fa-home"></i> Home</a></li>
+
+    <li class="active">分类添加</li>
+</ul>
+<div class="m-b-md">
+    <h3 class="m-b-none">分类添加</h3>
+</div>
+<div class="row" ng-controller="ctrl">
+    <div class="col-sm-12">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold">分类添加</header>
+            <div class="panel-body">
+                <form role="form" action="" method="post">
+                    <div class="form-group">
+                        <label>分类名称</label>
+                        <input type="text" class="form-control"   name="cname">
+                    </div>
+                    <div class="form-group">
+                        <label>所属分类</label>
+                        <select class="js-example-basic-single form-control" name="pid">
+                                <option value="{$category['cid']}"   >{$category['cname']}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>所属类型</label>
+                        <select class="js-example-basic-single form-control" name="tid">
+                            <foreach name="type" item="vo">
+                            <option value="{$vo['tid']}" <?php if($oldData['tid']==$vo['tid']){ ?> selected='selected'<?php }?>  >{$vo['type']}</option>
+                            </foreach>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>排序</label>
+                        <input type="number" class="form-control"   name="rank">
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-success">点击添加</button>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    function controller($scope, $, _) {
+
+    }
+</script>

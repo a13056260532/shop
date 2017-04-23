@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>注册页面</title>
+		<link rel="icon" type="text/css" href="__PUBLIC__/home/shop.ico"/>
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/index.css" />
+		<script src="__PUBLIC__/home/js/jquery-1.10.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/home/js/list.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="__PUBLIC__/layer/layer.js"></script>
+	</head>
+
+	<body style="background: #f5f5f5;">
+		<div class="regcontent">
+			<div class="layout" >
+
+				<form onsubmit="return reg(this)" action="" method="post">
+
+					<div class="reglogo">
+						<a href=""><img src="__PUBLIC__/home/images/timg.jpeg" /></a>
+						<span>帐号注册</span>
+					</div>
+					<div class="reginput">
+
+						<div class="username"><input type="text" name="username" placeholder="请输入用户名" required="required" /><span style="color: red"></span></div>
+						<div class="password"><input type="password" name="password" placeholder="请输入密码" required="required" /></div>
+						<div class="password"><input type="password" name="password1" placeholder="请再次输入密码" required="required" /></div>
+						<div class="code"><input type="" name="code" value="" class="codeimg" placeholder="请输入验证码" required="required" /><img src="{:U('home/login/code')}" onclick="this.src=this.src + '?as'" /></div>
+
+					</div>
+					<div class="btn"><input type="submit"   value="注册" /></div>
+				</form>
+
+
+				<div class="waring">
+					<span>已有账号，<a href="{:U('home/login/index')}">请直接登录</a></span>
+					<span><a href="{:U('home/index/index')}">直接去商城</a></span>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
+<script>
+    //异步获取是否已经注册
+    $('input[name=username]').blur(function () {
+        var username =$(this).val();
+        $.post("{:U('home/login/ajaxGetUsername')}",{username:username},function (res) {
+                if (res==3){
+                    $('.username').find('span').html('请输入用户名');
+                }else if(res == 0){
+                    $('.username').find('span').html('账户已存在，请重新申请');
+                }else {
+                    $('.username').find('span').html('可以注册');
+                }
+        },'json')
+    })
+    function reg(obj) {
+        var data = $(obj).serialize();
+        $.post("{:U('home/login/reg')}",data,function (res) {
+            if (res.status==0){
+                //信息框-例5
+                layer.msg(res.info, function(){
+                    //关闭后的操作
+                });
+            }else {
+                layer.msg(res.info,{icon:6}, function(){
+                    location.href= res.url;
+                });
+            }
+        },'json')
+        return false;
+    }
+
+</script>

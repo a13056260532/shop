@@ -1,0 +1,350 @@
+[ 2017-04-22T11:06:07+08:00 ] ::1 /shop/admin
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000322s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000317s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0011s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.008980s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.009341s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000084s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000143s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015682s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.015735s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000132s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000162s ]
+
+[ 2017-04-22T11:06:09+08:00 ] ::1 /shop/index.php/admin/login/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000242s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000378s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0022s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.009697s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.010137s ]
+NOTIC: [2] file_get_contents(): php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known /Applications/MAMP/htdocs/shop/Application/Common/Common/functions.php 第 210 行.
+NOTIC: [2] file_get_contents(http://www.ip138.com/ip2city.asp): failed to open stream: php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known /Applications/MAMP/htdocs/shop/Application/Common/Common/functions.php 第 210 行.
+NOTIC: [8] Undefined offset: 1 /Applications/MAMP/htdocs/shop/Application/Common/Common/functions.php 第 212 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000110s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000195s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.018238s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018322s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000251s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000302s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000843s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000898s ]
+
+[ 2017-04-22T11:06:09+08:00 ] ::1 /shop/index.php/admin/login/code.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000404s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000435s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0010s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.010711s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.011205s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000587s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000670s ]
+
+[ 2017-04-22T11:06:12+08:00 ] ::1 /shop/index.php/admin/login/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000270s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000321s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0010s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.008954s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.009322s ]
+NOTIC: [2] file_get_contents(): php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known /Applications/MAMP/htdocs/shop/Application/Common/Common/functions.php 第 210 行.
+NOTIC: [2] file_get_contents(http://www.ip138.com/ip2city.asp): failed to open stream: php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known /Applications/MAMP/htdocs/shop/Application/Common/Common/functions.php 第 210 行.
+NOTIC: [8] Undefined offset: 1 /Applications/MAMP/htdocs/shop/Application/Common/Common/functions.php 第 212 行.
+SQL: SHOW COLUMNS FROM `shop_user` [ RunTime:0.0009s ]
+SQL: SELECT * FROM `shop_user` WHERE `uid` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000064s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000114s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012522s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012612s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000180s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000214s ]
+
+[ 2017-04-22T11:06:14+08:00 ] ::1 /shop/index.php/admin/login/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000252s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000309s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0023s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.009583s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.009938s ]
+NOTIC: [2] file_get_contents(): php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known /Applications/MAMP/htdocs/shop/Application/Common/Common/functions.php 第 210 行.
+NOTIC: [2] file_get_contents(http://www.ip138.com/ip2city.asp): failed to open stream: php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known /Applications/MAMP/htdocs/shop/Application/Common/Common/functions.php 第 210 行.
+NOTIC: [8] Undefined offset: 1 /Applications/MAMP/htdocs/shop/Application/Common/Common/functions.php 第 212 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000055s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000087s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.009229s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.009288s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000182s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000216s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000546s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000582s ]
+
+[ 2017-04-22T11:06:18+08:00 ] ::1 /shop/index.php/admin/login/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000239s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000314s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0011s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0002s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.008002s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.008361s ]
+NOTIC: [2] file_get_contents(): php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known /Applications/MAMP/htdocs/shop/Application/Common/Common/functions.php 第 210 行.
+NOTIC: [2] file_get_contents(http://www.ip138.com/ip2city.asp): failed to open stream: php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known /Applications/MAMP/htdocs/shop/Application/Common/Common/functions.php 第 210 行.
+NOTIC: [8] Undefined offset: 1 /Applications/MAMP/htdocs/shop/Application/Common/Common/functions.php 第 212 行.
+SQL: SHOW COLUMNS FROM `shop_user` [ RunTime:0.0008s ]
+SQL: SELECT * FROM `shop_user` WHERE `uid` = 1 LIMIT 1   [ RunTime:0.0002s ]
+SQL: SELECT * FROM `shop_user` WHERE `uid` = 1 LIMIT 1   [ RunTime:0.0003s ]
+SQL: UPDATE `shop_user` SET `uid`='1',`username`='admin',`password`='hKqm3YN1eKiBenrchXeqnpS6nKqEfc1s',`logintime`='1492830378',`loginip`='' WHERE ( uid=1 ) [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000046s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000084s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011473s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.011547s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000287s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000331s ]
+
+[ 2017-04-22T11:06:19+08:00 ] ::1 /shop/index.php/admin/index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000248s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000329s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0019s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.009171s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.009548s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000285s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000348s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.032300s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.032347s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000142s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000172s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000537s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000576s ]
+
+[ 2017-04-22T11:06:21+08:00 ] ::1 /shop/index.php/admin/config/set.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000017s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000318s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000323s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0019s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.011605s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.011978s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000299s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000353s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.018066s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018103s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000123s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000150s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000472s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000506s ]
+
+[ 2017-04-22T11:06:23+08:00 ] ::1 /shop/index.php/admin/type/lists.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000231s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000301s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0012s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.012354s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.012703s ]
+SQL: SHOW COLUMNS FROM `shop_type` [ RunTime:0.0023s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `shop_type` LIMIT 1   [ RunTime:0.0007s ]
+SQL: SELECT * FROM `shop_type` ORDER BY tid LIMIT 0,5   [ RunTime:0.0008s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000279s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000338s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.021646s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021712s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000235s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000286s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000850s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000955s ]
+
+[ 2017-04-22T11:06:23+08:00 ] ::1 /shop/index.php/admin/type/add.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000342s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000484s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0020s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.010936s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.011499s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000266s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000311s ]
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/22b927bcab08952e9a364dab9343db03.php 第 370 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015708s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.015758s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000233s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000282s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000748s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000809s ]
+
+[ 2017-04-22T11:06:25+08:00 ] ::1 /shop/index.php/admin/cate/lists.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000295s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000461s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0018s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.010210s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.010751s ]
+SQL: SHOW COLUMNS FROM `shop_category` [ RunTime:0.0018s ]
+SQL: SELECT * FROM `shop_category`  [ RunTime:0.0007s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000278s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000330s ]
+NOTIC: [8] Undefined variable: page /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/761bd6d3753c4667d3750f040418af5e.php 第 389 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.024035s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.024100s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000271s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000310s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000540s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000584s ]
+
+[ 2017-04-22T11:06:25+08:00 ] ::1 /shop/index.php/admin/cate/add.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000234s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000327s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0018s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.009086s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.009523s ]
+SQL: SHOW COLUMNS FROM `shop_type` [ RunTime:0.0017s ]
+SQL: SELECT * FROM `shop_type`  [ RunTime:0.0002s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000247s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000300s ]
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015911s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.015963s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000238s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000287s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000750s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000813s ]
+
+[ 2017-04-22T11:12:11+08:00 ] ::1 /shop/index.php/admin/cate/add.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000237s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000308s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0019s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.009281s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.009637s ]
+SQL: SHOW COLUMNS FROM `shop_type` [ RunTime:0.0008s ]
+SQL: SELECT * FROM `shop_type`  [ RunTime:0.0002s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000582s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000733s ]
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+NOTIC: [8] Undefined variable: oldData /Applications/MAMP/htdocs/shop/Runtime/Cache/Admin/1e63603cb0c0765e0de965aee951a747.php 第 381 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.016117s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.016171s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000246s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000294s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000778s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000841s ]
+
+[ 2017-04-22T11:12:14+08:00 ] ::1 /shop/index.php/admin/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000231s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000305s ]
+SQL: SHOW COLUMNS FROM `shop_config` [ RunTime:0.0012s ]
+SQL: SELECT * FROM `shop_config` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0003s ]
+INFO: Run Common\Behaviors\AppBehavior [ RunTime:0.009343s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.009695s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000191s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000222s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011244s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.011300s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000219s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000268s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001122s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001230s ]
+

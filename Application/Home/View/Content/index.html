@@ -1,0 +1,476 @@
+<layout  name="master"/>
+<link rel="stylesheet" href="__PUBLIC__/home/css/store.css">
+<script>
+	var countZhong = <?php echo count($data)?>;
+</script>
+		<!--中间开始-->
+		<div id="content">
+			<div class="cont" >
+				<div class="main">
+					<div class="content-left">
+						<div class="box">
+							<div class="zhezhao"></div>
+							<div class="sekuai"></div>
+							<div class="smallTu"></div>
+							<a href="javascript:;" class="shang">&lt;</a>
+							<div class="list1">
+
+								<ul>
+									<foreach name="bigImg" item="vo">
+									<li><img src="__ROOT__/{$vo}" alt=""></li>
+									</foreach>
+
+								</ul>
+
+							</div>
+							<a href="javascript:;" class="xia">&gt;</a>
+
+							<div class="bgTu"></div>
+							<div class="bgTuHide">
+								<ul>
+									<foreach name="bigImg" item="vo">
+										<li><img src="__ROOT__/{$vo}" alt=""></li>
+									</foreach>
+								</ul>
+
+							</div>
+						</div>
+					</div>
+					<div class="content-right">
+
+						<div class="tit">{$goodData['gname']}</div>
+						<div class="description">
+							<volist name="goodAttri" id="vo">
+								{$vo['gavalue']} &nbsp;&nbsp;
+							</volist>
+						</div>
+						<div class="pirve">商城价：￥<i id="shopprice">{$goodData['shopprice']}</i></div>
+						<foreach name='data' key="k" item="v">
+						<div class="category">
+							<h4>{$k}</h4>
+							<ul>
+								<foreach name="v" key="kk" item="vv">
+								<li gaid="{$vv['gaid']}">{$vv['gavalue']}</li>
+								</foreach>
+							</ul>
+						</div>
+						</foreach>
+						<style>
+							.cont .content-right .nobdr h6.red{
+								background: #fa5437;
+							}
+							.cont .content-right .nobdr h6.huise{
+								background: #333;
+							}
+						</style>
+						<script>
+							$(function(){
+							    $('.category ul li').click(function () {
+										$('#waq_num').val(1);
+
+							        if($('.zhong').length == <?php echo count($data)?>){
+                                        $('#waq_num').val(1);
+
+                                        //组合id 商品id
+										var gid = <?php echo $_GET['gid']?>;
+										var combine = '';
+
+										$.each($('.zhong'),function(){
+											combine+=$(this).attr('gaid') + ',';
+										})
+
+                                        $.post("{:u('ajaxGetTotal')}",{gid:gid,combine:combine},function(res){
+											var newshopprice = {$goodData['shopprice']} +res.added;
+											addedmoney = res.added;
+											$('#shopprice').html(newshopprice);
+											$('#aq_inventory1').html('库存为：')
+											$('#aq_inventory').html(res.total)
+											bigNum=res.total;
+											if(res.valid){
+												//有库存
+                                                $('.cont .content-right .nobdr h6').removeClass('huise').addClass('red');
+                                            }else{
+
+												//没有存货
+												$('.cont .content-right .nobdr h6').addClass('huise').removeClass('red');
+
+											}
+                                        },'json');
+									}
+                                })
+							})
+						</script>
+						<style>
+							.num span{
+								line-height: 32px;
+							}
+							.num i{
+								color: red;
+							}
+						</style>
+						<div class="num">
+							<h5>数量</h5>
+							<a href="javascript:;" class="num_l">-</a>
+							<input id="waq_num" readonly type="text" value="1" />
+							<a href="javascript:;" class="num_r">+</a>
+							<span id="aq_inventory1"></span> <i  id="aq_inventory"></i>
+						</div>
+
+						<div class="nobdr">
+							<h6  style="height: 50px; line-height: 50px; display: block; float:left;" class="red"><a href="javascript:;">立即购买</a></h6>
+							<a style="display: block; float:left;" href="javascript:void(0);"  class="favorite <if condition='!$ismylove'> nofav </if> "    > <span class="gInfoBtn-icon gInfoBtn-icon-heart"></span>喜欢</a>
+						</div>
+						<!--点击我喜欢-->
+						<script>
+							$('.favorite').click(function () {
+								var gid = <?php echo $_GET['gid']?>;
+
+								<?php if($_SESSION['puid']){?>
+								if ($(this).is('.nofav')){
+                                    $(this).removeClass('nofav');
+									//异步添加到库内
+									$.post("<?php echo U('home/content/ajaxAddMyLove')?>",{gid:gid},function (res) {
+
+
+                                    },'json')
+
+								}else {
+                                    $(this).addClass('nofav');
+                                    $.post("<?php echo U('home/orderList/ajaxDelLove')?>",{gid:gid},function (res) {
+
+                                    },'json')
+
+								}
+							<?php   }else{?>
+
+								location.href="<?php echo U('home/login/index') ?>";
+								<?php }?>
+                            })
+						</script>
+
+						<!--立即购买-->
+						<script>
+							$(function(){
+								//点击立即购买
+                                $('.cont .content-right .nobdr h6.red').click(function(){
+									if($(this).is('.huise')){
+                                        //信息框-例5
+                                        layer.msg('请重新选择规格', function(){
+                                        });
+									    return false;
+                                	}
+                                    if($('.zhong').length != <?php echo count($data)?>){
+										//信息框-例5
+                                        layer.msg('请选择规格', function(){
+                                        });
+										return false;
+                                    }
+                                    combine='';
+                                    $.each($('.zhong'),function(){
+                                        combine+=$(this).attr('gaid') + ',';
+                                    })
+
+                                    var gid = {$_GET['gid']};
+									var goodCount =$('#waq_num').val();
+                                    var options = {};
+									var aq_inventory=$('#aq_inventory').html();
+									var price = addedmoney+{$goodData['shopprice']};
+                                    $.each($('.zhong'),function(){
+										//获取键名还有键值
+                                        options[$(this).parents('.category').find('h4').html()] = $(this).html();
+                                    })
+									//走到这里，执行添加购物车动作
+									$.post('{:U("ajaxGetCart")}',{price:price,gid:gid,num:goodCount,options:options,combine:combine,inventory:aq_inventory},function (res) {
+											if (res==1){
+												location.href ="{:U('home/cart/index')}";
+											}
+                                    })
+                            	})
+
+                            })
+						</script>
+
+					</div>
+				</div>
+			</div>
+			<div class="desc" id="xijie">
+				<div class="desctab" >
+					<div class="main">
+						<ul>
+							<li><a href="#xijie">产品详情</a><span>|</span></li>
+							<li><a href="#guige">规格参数</a><span>|</span></li>
+							<li><a href="#wenti">常见问题</a></li>
+						</ul>
+					</div>
+				</div>
+				<style>
+					.con{
+						width: 100%;
+						margin:0 auto;
+						text-align: center;
+					}
+				</style>
+				<div class="con" >
+					{$detailData['intro']}
+				</div>
+				<div class="con main" id="guige">
+					<h1>产品参数</h1>
+					<table cellpadding="0" cellspacing="0" border="1">
+						<tbody>
+							<tr>
+								<td class="wd207" colspan="2">主体</td>
+							</tr>
+							<tr>
+								<td class="wd207">品牌</td>
+								<td>360手机</td>
+							</tr>
+							<tr>
+								<td class="wd207">型号</td>
+								<td>1509-A00（Q5 Plus)</td>
+							</tr>
+							<tr>
+								<td class="wd207">上市时间</td>
+								<td>2016年8月</td>
+							</tr>
+							<tr>
+								<td class="wd207" colspan="2">基本信息</td>
+							</tr>
+							<tr>
+								<td class="wd207">机身颜色</td>
+								<td>流光金</td>
+							</tr>
+							<tr>
+								<td class="wd207">机身尺寸（mm）</td>
+								<td>156.5*80*8.3</td>
+							</tr>
+							<tr>
+								<td class="wd207">机身重量（g）</td>
+								<td>175.0g</td>
+							</tr>
+							<tr>
+								<td class="wd207" colspan="2">操作系统</td>
+							</tr>
+							<tr>
+								<td class="wd207">操作系统</td>
+								<td>360 OS Android 6.0</td>
+							</tr>
+							<tr>
+								<td class="wd207" colspan="2">主芯片</td>
+							</tr>
+							<tr>
+								<td class="wd207">CPU型号</td>
+								<td>骁龙820</td>
+							</tr>
+							<tr>
+								<td class="wd207">CPU频率</td>
+								<td>Kryo 2.15GHz x 4</td>
+							</tr>
+							<tr>
+								<td class="wd207" colspan="2">网络支持</td>
+							</tr>
+							<tr>
+								<td class="wd207">双卡机类型</td>
+								<td>双卡双待单通</td>
+							</tr>
+							<tr>
+								<td class="wd207">SIM卡类型</td>
+								<td>Nano SIM</td>
+							</tr>
+							<tr>
+								<td class="wd207">网络制式</td>
+								<td>全网通</td>
+							</tr>
+							<tr>
+								<td class="wd207" colspan="2">存储</td>
+							</tr>
+							<tr>
+								<td class="wd207">ROM</td>
+								<td>128GB UFS2.0 机身存储</td>
+							</tr>
+							<tr>
+								<td class="wd207">RAM</td>
+								<td>4GB LPDDR4 双通道内存</td>
+							</tr>
+							<tr>
+								<td class="wd207">存储卡</td>
+								<td>支持MicroSD（TF）</td>
+							</tr>
+							<tr>
+								<td class="wd207" colspan="2">屏幕</td>
+							</tr>
+							<tr>
+								<td class="wd207">主屏幕尺寸（英寸）</td>
+								<td>6.0英寸</td>
+							</tr>
+							<tr>
+								<td class="wd207">分辨率</td>
+								<td>1920*1080(FHD)</td>
+							</tr>
+							<tr>
+								<td class="wd207">屏幕材质类型</td>
+								<td>三星（SAMSUNG）Super AMOLED</td>
+							</tr>
+							<tr>
+								<td class="wd207">屏幕色彩</td>
+								<td>1600万</td>
+							</tr>
+							<tr>
+								<td class="wd207" colspan="2">前置摄像头</td>
+							</tr>
+							<tr>
+								<td class="wd207">前置摄像头</td>
+								<td>1300万像素</td>
+							</tr>
+							<tr>
+								<td class="wd207">前摄光圈大小</td>
+								<td>f/2.0</td>
+							</tr>
+							<tr>
+								<td class="wd207">美颜技术</td>
+								<td>支持</td>
+							</tr>
+							<tr>
+								<td class="wd207">拍照特点</td>
+								<td>美颜</td>
+							</tr>
+							<tr>
+								<td class="wd207" colspan="2">后置摄像头</td>
+							</tr>
+							<tr>
+								<td class="wd207">后置摄像头</td>
+								<td>双1300万像素</td>
+							</tr>
+							<tr>
+								<td class="wd207">摄像头光圈大小</td>
+								<td>f/2.0</td>
+							</tr>
+							<tr>
+								<td class="wd207">闪光灯</td>
+								<td>LED灯</td>
+							</tr>
+							<tr>
+								<td class="wd207">美颜技术</td>
+								<td>支持</td>
+							</tr>
+							<tr>
+								<td class="wd207" colspan="2">电池信息</td>
+							</tr>
+							<tr>
+								<td class="wd207">电池容量（mAh）</td>
+								<td>3700</td>
+							</tr>
+							<tr>
+								<td class="wd207">电池是否可拆卸</td>
+								<td>否</td>
+							</tr>
+							<tr>
+								<td class="wd207">闪充</td>
+								<td>支持QC3.0涡轮闪充</td>
+							</tr>
+							<tr>
+								<td class="wd207" colspan="2">娱乐功能</td>
+							</tr>
+							<tr>
+								<td class="wd207">mic数量</td>
+								<td>2个</td>
+							</tr>
+							<tr>
+								<td class="wd207">喇叭数量</td>
+								<td>1个</td>
+							</tr>
+							<tr>
+								<td class="wd207" colspan="2">数据接口</td>
+							</tr>
+							<tr>
+								<td class="wd207">数据传输接口</td>
+								<td>WIFI、蓝牙、WiFi热点、OTG接口</td>
+							</tr>
+							<tr>
+								<td class="wd207">NFC/NFC模式</td>
+								<td>不支持</td>
+							</tr>
+							<tr>
+								<td class="wd207">耳机接口类型</td>
+								<td>3.5mm</td>
+							</tr>
+							<tr>
+								<td class="wd207">充电接口类型</td>
+								<td>Type-C</td>
+							</tr>
+							<tr>
+								<td class="wd207" colspan="2">手机特性</td>
+							</tr>
+							<tr>
+								<td class="wd207">指纹识别</td>
+								<td>支持</td>
+							</tr>
+							<tr>
+								<td class="wd207">GPS</td>
+								<td>支持</td>
+							</tr>
+							<tr>
+								<td class="wd207">电子罗盘</td>
+								<td>支持</td>
+							</tr>
+							<tr>
+								<td class="wd207">霍尔感应器</td>
+								<td>支持</td>
+							</tr>
+							<tr>
+								<td class="wd207">陀螺仪</td>
+								<td>支持</td>
+							</tr>
+							<tr>
+								<td class="wd207">其他</td>
+								<td>距离感应、呼吸灯、光线感应</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="con main" id="wenti">
+					<h2>常见问题</h2>
+					<dl>
+						<dt><i>1、</i><em></em>订单提交成功后还可以修改收货信息吗？</dt>
+						<dd><u></u>订单付款之前，您可以进入“我的订单”，在订单详情页内修改收货信息。付款之后将不可修改收货信息。</dd>
+					</dl>
+					<dl>
+						<dt><i>2、</i><em></em>订单提交成功后还可以修改收货信息吗？</dt>
+						<dd><u></u>订单付款之前，您可以进入“我的订单”，在订单详情页内修改收货信息。付款之后将不可修改收货信息。</dd>
+					</dl>
+					<dl>
+						<dt><i>3、</i><em></em>订单提交成功后还可以修改收货信息吗？</dt>
+						<dd><u></u>订单付款之前，您可以进入“我的订单”，在订单详情页内修改收货信息。付款之后将不可修改收货信息。</dd>
+					</dl>
+					<dl>
+						<dt><i>4、</i><em></em>订单提交成功后还可以修改收货信息吗？</dt>
+						<dd><u></u>订单付款之前，您可以进入“我的订单”，在订单详情页内修改收货信息。付款之后将不可修改收货信息。</dd>
+					</dl>
+					<dl>
+						<dt><i>5、</i><em></em>订单提交成功后还可以修改收货信息吗？</dt>
+						<dd><u></u>订单付款之前，您可以进入“我的订单”，在订单详情页内修改收货信息。付款之后将不可修改收货信息。</dd>
+					</dl>
+					<dl>
+						<dt><i>6、</i><em></em>订单提交成功后还可以修改收货信息吗？</dt>
+						<dd><u></u>订单付款之前，您可以进入“我的订单”，在订单详情页内修改收货信息。付款之后将不可修改收货信息。</dd>
+					</dl>
+					<dl>
+						<dt><i>7、</i><em></em>订单提交成功后还可以修改收货信息吗？</dt>
+						<dd><u></u>订单付款之前，您可以进入“我的订单”，在订单详情页内修改收货信息。付款之后将不可修改收货信息。</dd>
+					</dl>
+					
+				</div>
+			</div>
+
+		</div>
+		</div>
+		<!--中间结束-->
+
+		<!--右边底部返回顶部-->
+		<div class="slidebar" id="slidebar">
+			<ul>
+				<li class="topback">
+					<a href="javascript:;"></a>
+				</li>
+			</ul>
+		</div>
+		<!--右边底部返回顶部结束-->

@@ -1,0 +1,47 @@
+<layout name="master" />
+<ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a href="{:u('admin/index/index')}"><i class="fa fa-home"></i> Home</a></li>
+
+    <li class="active">类型属性列表</li>
+</ul>
+<div class="m-b-md">
+    <h3 class="m-b-none">类型属性列表</h3>
+</div>
+<section class="scrollable wrapper">
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>分类id</th>
+            <th>分类名称</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <style>
+
+        </style>
+        <foreach name="category" item="vo">
+            <tr>
+                <td>{$vo['cid']}</td>
+                <td>{$vo['_cname']}</td>
+                <td>
+                    <div class="btn-group">
+                        <a href="{:u('admin/cate/addson',['cid'=>$vo['cid']])}" class="btn btn-success">添加子类</a>
+                        <a href="{:u('admin/cate/edit',['cid'=>$vo['cid']])}" class="btn btn-primary">编辑</a>
+                        <a href="javascript:;" onclick="del({$vo['cid']})" class="btn btn-danger">删除</a>
+                    </div>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <span style="display:block;width: 70%;font-size: 20px; color: red;text-align: center; ">{$page}</span>
+</section>
+<script>
+    function del(cid) {
+        util.confirm('确定删除吗?',function(){
+            location.href = '__ROOT__/admin/cate/del?cid='+cid;
+        })
+    }
+</script>

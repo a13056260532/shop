@@ -1,0 +1,85 @@
+<layout name="master" />
+
+<ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a href="{:u('admin/index/index')}"><i class="fa fa-home"></i> Home</a></li>
+    <li class="active">商品管理</li>
+</ul>
+<div class="m-b-md">
+    <h3 class="m-b-none">商品管理</h3>
+</div>
+<section class="scrollable wrapper">
+    <form action="" method="post" id="listform">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>商品ID</th>
+            <foreach name="data" item="vo" key="k">
+            <th>{$k}</th>
+            </foreach>
+            <th>货号</th>
+            <th>库存</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="goodslistData" item="vo">
+            <tr>
+                <td>{$vo['glid']}</td>
+                <foreach name="vo['combine']" item="v">
+                <td>{$v}</td>
+                </foreach>
+                <td>{$vo['number']}</td>
+                <td>{$vo['inventory']}</td>
+                <td>
+                    <div class="btn-group">
+                        <a href="javascript:;" onclick="del({$vo['glid']})" class="btn btn-danger">删除</a>
+                    </div>
+                </td>
+            </tr>
+        </foreach>
+        <tr>
+            <td>添加商品</td>
+            <foreach name="data" item="vo" key="k">
+                <td>
+                    <select name="combine[]" id="">
+                        <option value="0">请选择</option>
+                        <foreach name="vo" item="v" >
+                            <option  value="{$v['gaid']}">{$v['gavalue']}</option>
+                        </foreach>
+                    </select>
+                </td>
+            </foreach>
+            <td>
+                <input type="text" name="number">
+            </td>
+            <td>
+                <input type="text" name="inventory">
+            </td>
+            <td></td>
+        </tr>
+        </tbody>
+        <script>
+
+            $('select').change(function () {
+                var data = $('#listform').serialize();
+                $.post("{:U('admin/goodslist/iscombine')}",data,function (res) {
+                    if (res==0){
+                        layer.alert('该组合已存在,请重新选择。', {icon: 2});
+                        $('select').val(0);
+                    }
+                },'json')
+            })
+        </script>
+    </table>
+    <div class="btn-group">
+        <button type="submit" class="btn btn-success">添加商品</button>
+    </div>
+    </form>
+</section>
+<script>
+    function del(glid) {
+        util.confirm('确定删除吗?',function(){
+            location.href = "{:U('admin/goodslist/del')}"+'?glid='+glid+"&gid={$_GET['gid']}";
+        })
+    }
+</script>

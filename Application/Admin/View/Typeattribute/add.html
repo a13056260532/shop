@@ -1,0 +1,47 @@
+<layout name="master" />
+<ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a href="{:u('admin/index/index')}"><i class="fa fa-home"></i> Home</a></li>
+
+    <li class="active">属性添加</li>
+</ul>
+<div class="m-b-md">
+    <h3 class="m-b-none">属性添加</h3>
+</div>
+<div class="row" ng-controller="ctrl">
+    <div class="col-sm-12">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold">类型添加</header>
+            <div class="panel-body">
+                <form role="form" action="" method="post">
+                    <div class="form-group">
+                        <label>属性名称</label>
+                        <input type="text" class="form-control" value="{$oldData['taname']}"  name="taname">
+                    </div>
+                    <div class="form-group">
+                        <label>属性类型</label>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="tatype"  value="属性" <?php if($oldData['tatype'] != "规格"){ ?> checked="checked"<?php } ?> >
+                                属性
+                            </label>
+                            <label >
+                                <input type="radio" name="tatype"  value="规格" <?php if($oldData['tatype']=="规格"){ ?> checked="checked"<?php } ?> >
+                                规格
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>属性值</label>
+                        <textarea name="tavalue" class="form-control"  cols="30" rows="10" placeholder="例如：A属性|B属性">{$oldData['tavalue']}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-success">点击添加</button>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    function controller($scope, $, _) {
+
+    }
+</script>

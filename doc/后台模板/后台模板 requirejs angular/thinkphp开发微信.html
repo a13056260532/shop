@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>thinkphp开发微信</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h2 style='color:red;font-size:60px'>thinkphp开发微信</h2>
+<h2>文档书写</h2>
+<blockquote>
+<p>markdownpad
+看云  http://www.kancloud.cn</p>
+</blockquote>
+<h2>配置服务器</h2>
+<blockquote>
+<p>在服务器wwwroot目录下面新建thinkphpwechat目录</p>
+<p>将thinkphp传到服务器</p>
+<p>在浏览器输入网址：显示框架欢迎语</p>
+</blockquote>
+<h2>下载安装hdjs和后盾微信SDK</h2>
+<blockquote>
+<p>安装nodejs--&gt;npm install hdjs</p>
+<p>安装composer -&gt; composer require houdunwang/wechat</p>
+</blockquote>
+<h2>加载自定义模块</h2>
+<blockquote>
+<p>创建模块</p>
+</blockquote>
+<pre><code>|——在跟目录下创建
+    |--Addons
+        |--Article
+            |--Site.php[namespace Addons\Article]
+</code></pre>
+
+<blockquote>
+<p>需要将vendor这个目录放到项目根目录【确保文件全部上传完成】
+替换composer.json文件
+单入口加上：require 'vendor/autoload.php';
+这时候能在Application/Home/Controller/IndexController.class.php里面的方法就可以实例化到我们自定义的类中的方法了
+或者执行以下操作</p>
+</blockquote>
+<pre><code>1.在conposer.json文件中最后加上下面这句话
+    &quot;autoload&quot;:{
+        &quot;psr-4&quot;:{
+            &quot;Addons\\&quot;:&quot;Addons&quot;
+        }
+    }
+2.单入口加上：require 'vendor/autoload.php';
+3.在phpstorm命令窗口composer dumpautoload
+</code></pre>
+
+<h2>加载后台模板</h2>
+<blockquote>
+<p>页面加载不出来，需要看控制台报错</p>
+</blockquote>
+<pre><code>1.&lt;script src=&quot;__ROOT__/node_modules/hdjs/require.js&quot;&gt;&lt;/script&gt;
+2.&lt;script src=&quot;__ROOT__/node_modules/hdjs/config.js&quot;&gt;&lt;/script&gt;
+3.修改
+    //配置后台地址
+    var hdjs = {
+        'base': '__ROOT__/node_modules/hdjs',
+        'ueditor':'',
+        'uploader': '/admin/Component/uploader',
+        'filesLists': '/admin/Component/filesLists',
+        'removeImage': '删除图片后台地址'
+    };
+</code></pre>
+
+<blockquote>
+<p>angular处理页面</p>
+</blockquote>
+<pre><code>1.angular.bootstrap(document.getElementsByTagName('body'), ['app']);//声明一个模块，相当与在body写了ng-app
+2.我们自己在body写ng-controller='ctrl'
+3.测试在子模版中使用angular处理数据
+    |--angular.module有一个判断
+            if (angular.isFunction(controller)) {
+                controller($scope, $, _);
+            }
+    |--检测又没存在controller这个函数，存在则调用controller函数，其实相当于controller函数在aangular.module('app', []).controller('ctrl', ['$scope', function ($scope) {}])里面运行
+</code></pre>
+
+<h2>链接数据库</h2>
+<blockquote>
+<p>在Thinkphp/conf/convention.php找到数据库配置，复制到Application/Common/conf/config.php进行修改</p>
+</blockquote>
+<h4 style='color:red;font-size:30px'>2016年12月13日14:26:14星期二</h4>
+<h2>写了WechatController【微信配置添加/修改】</h2>
+<pre><code>1.控制器中执行添加代码公用，所以把公用的提出来到Common/Controller/AdminController.class.php【原来没有这个目录，是我们自己创建的】
+2.Common/Controller/创建了BaseController.class.php为了前后台都用这个控制器，把上一部AdminController.class.php里面代码，拿到了BaseController.class.php，AdminController继承创建了BaseController，创建了BaseController继承\Think\Controller
+</code></pre>
+
+<h2>行为【应用开始】</h2>
+<blockquote>
+<p>创建Common\Conf\tags.php</p>
+</blockquote>
+<pre><code>return [
+    'app_begin'=&gt;['Common\\Behaviors\\AppBeginBehavior'],
+];  
+</code></pre>
+
+<blockquote>
+<p>创建Common/Behaviors/AppBeginBehavior.class.php</p>
+</blockquote>
+<pre><code>1.继承extends \Think\Behavior
+2.//行为执行入口
+    public function run(&amp;$param){
+
+    }
+3.手册中：扩展--行为扩展
+4.在hdphp3.0中hdphp-master\vendor\houdunwang\framework\src\kernel\helper.php文件中借助一个v函数
+5.把v函数放在thinkphp中Application/Common/Common/helper.php
+6.自己写了dd打印函数
+7.AppBeginBehavior.class.php加载了helper.php这个函数文件【require 'Application/Common/Common/helper.php'】
+</code></pre>
+
+<h2>__init方法【Comon/Controller/BaseController.class.php】</h2>
+<pre><code>public function __construct()
+{
+    parent::__construct();
+    if(method_exists($this,'__init')){
+        $this-&gt;__init();
+    }
+}
+这样在子类中使用：
+public function __init()
+{
+    echo '后盾网';
+}
+相当于构造方法会自动执行，但是不会覆盖父级构造方法
+</code></pre>
+
+<h2>修改框架运行的runtime目录</h2>
+<pre><code>1.在但入口文件里面定义一个常量：define('RUNTIME_PATH','Runtime/');
+2.框架常量可以参考：附录--常量参考
+</code></pre>
+
+<h2>测试微信验证与消息恢复</h2>
+<blockquote>
+<p>在Application下面创建Wechat模块</p>
+</blockquote>
+<pre><code>|--Controller
+    |--EntryController.class.php
+        |--show()方法
+</code></pre>
+
+<blockquote>
+<p>修改AppBeginBehavior类里面的内容结构</p>
+</blockquote>
+<pre><code>1.将原来最初写的结构：
+    //获取config表中的系统配置以及微信配置
+    $config = m('config')-&gt;find(1);
+    //将配置项值转为数组
+    $config['system'] = json_decode($config['system'],true);
+    $config['wechat'] = json_decode($config['wechat'],true);
+    //将$config存储到全局配置项
+    //v('config',$config);
+2.修改为一下两个独立的方法进行操作
+    public function run(&amp;$param){
+        //1.加载系统配置
+        $this-&gt;loadConfig();
+        //微信配置
+        $this-&gt;loadWechatConfig();
+    }
+3.微信sdk手册：http://www.kancloud.cn/houdunwang/wechat/232839
+    |--先在AppBeginBehavior进行微信配置【基础--配置】
+    |--在Wechat/Controller/EntryController.class.php里面的show方法进行微信绑定测试(new Wechat())-&gt;valid();【注意命名空间的导入】【手册位置：绑定--操作】
+    |--测试恢复消息【手册位置：消息管理--文本消息】
+</code></pre>
+
+<h2>访问Addons里面模块</h2>
+<blockquote>
+<p>在Addons目录里面创建了Demo这个模块
+	|--Addons
+		|--Demo
+			|--Site.php[后台控制器]【继承Module.php】
+			|--Web.php【前台控制器】【继承Module.php】
+			|--View【模板目录】
+		Module.php【各个模块公用控制器】【继承\Think\Controller】
+在浏览器中不能直接访问Addons里面的类，需要借助Applications/Module/Controller/EntryController.class.php当作中转站</p>
+</blockquote>
+<pre><code>1.需要处理成这样的地址：http://c70_wubin.52tty.com/c75thinkphpwechat/index.php/Module/Entry/handler?mo=demo&amp;action=show&amp;type=site
+2.需要通过get参数来却别访问的是哪一个模块下的哪一个控制器类中的哪一个方法【mo：模块；ac：方法；t:前台/后台】
+3.通过区分不同的参数，做出分流
+</code></pre>
+
+<blockquote>
+<p>这个时候正常应该能访问输出Addons/Demo/Site.php中show方法
+在这修改了Common/conf文件里面默认访问的模块、控制器、方法</p>
+</blockquote>
+<pre><code>1.原先默认访问Admin/Index/index
+2.将其修改为默认访问我们自定义的模块Module/Entry/handler
+</code></pre>
+
+<blockquote>
+<p>写了两个跳转函数site<em>url和web</em>url</p>
+</blockquote>
+<pre><code>1.原来u()函数默认地址是Application,不适用我们自定义的Addons
+2.site_url('demo.test',['cid'=&gt;1,'name'=&gt;'houdunren'])，我们希望最终解析成：http://c70_wubin.52tty.com/c75thinkphpwechat/index.php?mo=demo&amp;ac=test&amp;t=site&amp;cid=1&amp;name=houdunren
+3.在Common/Common/helper.php新增加函数site_url和web_url
+</code></pre>
+
+<h4 style='color:red;font-size:30px'>2016年12月14日14:14:33星期三</h4>
+<blockquote>
+<p>增加模块管理</p>
+</blockquote>
+<pre><code>1.加载模板不能正常加载，修改父级模板master.html位置【在原来Admin/View/master.html--&gt;Resource/View/master.html】
+2.修改&lt;layout name=&quot;../../../Resource/View/master&quot; /&gt;
+3.在左侧菜单跳转的时候原来{:u('config/set')},在夸模块之间进行跳转的时候，有问题，做了补充{:u('Admion/config/set')},
+</code></pre>
+
+<blockquote>
+<p>模块设计</p>
+</blockquote>
+<pre><code>|--3检测模块是否已经存在
+    |--在addson目录里面进行扫描
+
+|--2.目录以及基本文件的创建
+    |--2.1 Addons/Demo/View递归进行创建,目录创建出来，补充完成了第1.3步
+    |--2.2 预先准备好的模板【命名空间需要替换】
+        |--file_get_contents读取模板文件的数据
+        |--str_replace进行替换
+        |--file_put_contents把最终替换完成的文件数据，写入并且生成Addons/Demo/Site.php和Addons/Demo/Web.php
+
+|--1.生成manifest.php配置文件
+    |--1.1 array_filter( preg_split( '@(\r|\n)@' , $_POST['actions'] ) ).将页面提交过来的actions数据处理成php方便处理的数组结构
+
+    |--1.2 处理完之后重新压回$_POST
+    |--1.3 创建出manifest.php这个文件，并且把内容写进去，在这我们进行第2步操作
+</code></pre>
+
+<blockquote>
+<p>模块列表</p>
+</blockquote>
+<pre><code>|--1. 扫描Addons目录,如果模块目录下面有manifest.php这个文件，才是伪合法模块
+|--2. 将每一个模块中manifest.php配置文件中的数据读取出来，重组成一个数组，遍历到页面上
+|--3.获取所有已经安装的模块【在模板页面上区别显示安装或者是卸载】
+</code></pre>
+
+<blockquote>
+<p>模块的安装</p>
+</blockquote>
+<pre><code>|--2.模块重复安装的判断
+    |--检测数据库是否已经存在，存在说明已经安装过了
+|--1.将数据写入数据库【module数据库】
+    |--将安装这个模块目录下面的manifest.php这个文件里面的内容写入到数据库，需要将actions数据转为json
+|--3.调用父级控制器中store方法：$this-&gt;store(new ModuleModel(),$data);完成添加
+    |--新增加了Common/Model/BaseModel.class.php,目的将模型中store方法提出来变成公共
+    |--修改ConfigModel.class.php
+        源文件：
+        if($this-&gt;create($data)){
+            $data[$this-&gt;pk] = 1;
+            //验证成功
+            //print_r($this-&gt;pk);die;
+            $action = isset($data[$this-&gt;pk]) ? 'save' : 'add';
+            //echo $action;
+            $res = $this-&gt;$action($data);
+            return ['status'=&gt;'success','message'=&gt;'操作成功'];
+        }else{
+            //验证失败
+            return ['status'=&gt;'failed','message'=&gt;$this-&gt;getError()];
+        }
+        将其修改为：
+        $data[$this-&gt;pk] = 1;
+        //执行父级模型中store动作
+        return parent::store($data);【需要在父级模型中查看】
+    |--新增加ModuleModel.class.php文件，执行该数据表添加的时候，调用父级模型中的store方法完成
+|--4.在模块列表增加第3步
+</code></pre>
+
+<blockquote>
+<p>模块卸载</p>
+</blockquote>
+<pre><code>1.将对应数据从数据库删除
+2.成功跳转：$this-&gt;success('卸载成功',u('lists'))，这个参数指定跳转地址，用u函数生成一下
+</code></pre>
+
+<blockquote>
+<p>公共左菜单生成【安装完成一个模块之后，自动生成菜单】</p>
+</blockquote>
+<pre><code>1.在AdminController.class.php完成
+2.构造方法，如果使用__construct(),注意不要覆盖父级构造方法
+3.分配变量时候注意区分系统变量分配
+4.跳转的时候需要用site_url（'demo.test'）进行跳转,这个地方的跳转我需要跳转到Addons，最后完成到这里，在对应模块写方法测试能不能正常跳转
+</code></pre>
+
+<h4 style='color:red;font-size:30px'>2016年12月15日15:48:08星期四</h4>
+<blockquote>
+<p>访问后台需要http://c70_wubin.52tty.com/c75thinkphpwechat/index.php/admin/index/index
+删除原来所有测试模块，新增加Base基本功能模块</p>
+</blockquote>
+<pre><code>1.加载模板
+    |--$this-&gt;display(),无法识别我们自定义模块View里面的模板，在父级类中自定义了display方法
+    |--创建了wx_base_text数据表
+    |--在当前模块目录下面创建了Model/BaseTextModel.php文件，【 &lt;span style='color:red'&gt;注意:模型不能带.class.php&lt;/span&gt; 】,继承公共模型BaseModel
+    |--调用父级控制器中的store方法进行添加
+    |--数据可以正常添加，但是会报模版错误--$this-&gt;success会加载模板，因为我们自定义了display，success就会走我们自地冠以的display，导致模板无法正常加载，【解决办法，修改我们之前自定义的display方法的名字为make】
+    |--在BaseTextModel.php模型中定义了store方法，既可以执行添加，又可以执行修改
+        if(m('base_text')-&gt;find(1)){
+            $data[$this-&gt;pk] = 1;
+        }
+2.将数据库数据读取并分配显示到模板页面上
+3.修改微信关注回复以及默认回复
+    |--在模块Base创建了Processer.php【微信处理器】+在Addons夏创建HdProcesser.php【各个模块公用微信处理器】
+    |--通过Wechat/Entry/show,打通跟Base模块之间的关系
+        $name = '\Addons\\' . 'Base' . '\Processer';
+    call_user_func_array( [ new $name , 'handler' ] , [ ] );
+    |--HdProcesser.php实例化消息类
+    |--Processer.php默认回复以及消息关注回复
+    |--为了以后创建出来的模块都有Processer.php这个文件，我们将这个文件放在Resource/Data/,可以保证创建模块时候自动创建目录
+</code></pre>
+
+<blockquote>
+<p>文本回复</p>
+</blockquote>
+<pre><code>1.设计模板页面增加单选框，wx_module数据库增加对应字段
+2.重新设计文本回复模块
+3.文本消息增加判断，跳转到Application/Module/KeyworsController
+    |--在这加载部分模板【关键词】
+    |--【回复模板】Addons/Text/View/text.html【$this-&gt;fetch】
+</code></pre>
+
+<h4 style='color:red;font-size:30px'>2016年12月16日15:44:55星期五</h4>
+<blockquote>
+<p>关键词的添加</p>
+</blockquote>
+<pre><code>1.在Module/Controller/KeywordsController.class.php--&gt;handler方法接受post数据执行添加方法
+2.增加闭包函数【BaseController.class.php中store方法】
+3.执行关键词回复的添加---Text模块/Keywords.php中执行
+    |--实例化关键词回复模型，执行对应数据表的添加
+</code></pre>
+
+<blockquote>
+<p>关键词列表展示</p>
+</blockquote>
+<pre><code>1.修改master.html，直接跳转到展示页面，在展示页面增加添加按钮
+</code></pre>
+
+<blockquote>
+<p>关键词的编辑功能</p>
+</blockquote>
+<pre><code>1.在执行store方法方法的时候，需要在post数据里面增加一个下标为主键的元素：
+    if($kid){
+            $data['kid'] = $kid;
+
+    }
+2.执行关键词回复的修改，执行对应模型的store方法时候，同样需要在post数据里面增减对应表主键
+    |--根据关键词表的主键找回复表的主键
+        |--在闭包里面执行：$this-&gt;keywords-&gt;submit( $res['data'] )无法正常传递关键词表的主键
+        |--我们需要的主键id，，但是执行模型动作save的时候，返回的数据1或者0，不是我们所需要的数据
+        |--这个时候就在闭包增加判断：
+            if($this-&gt;kid){
+                $res['data'] = $this-&gt;kid;
+            }
+            最初写法【这个写法是错误的】：
+            if($kid){
+                $res['data'] = $this-&gt;kid;
+            }，在闭包里面无法使用外部变量，所以定义成了属性
+        |--同时Addons/Keywords.php--submit方法中判断：
+            $id = (new TextContentModel())-&gt;getFieldBykid($kid,'id');
+            if($id){
+                $data['id'] = $id;
+            }
+</code></pre>
+
+<blockquote>
+<p>关键词的删除</p>
+</blockquote>
+<pre><code>1.执行Application/Module/Controller/KeywordsController.class.php中的删除方法，删除关键词
+2.调用Text模块下面Keywords.php类中删除方法删除关键词回复
+</code></pre>
+
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

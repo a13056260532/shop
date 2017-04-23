@@ -1,0 +1,151 @@
+<layout name="master"/>
+
+<style>
+    .u-flyer{display: block;width: 80px;height: 80px;border-radius: 50px;position: fixed;z-index: 9999;}
+    .msg {
+        height: 310px;
+        padding-top: 80px;
+        width: 100%
+    }
+
+    .fault-anzai {
+        margin: 0 auto
+    }
+
+    .msg {
+        height: 250px;
+        padding-top: 40px;
+        width: 100%
+    }
+
+    .fault-anzai {
+        background: url(//p.ssl.qhmsg.com/t01184246e2bc29bc4c.jpg) no-repeat;
+        height: 148px;
+        margin: 0 auto;
+        width: 97px
+    }
+
+    .msg .contz {
+        font-size: 18px;
+        margin-top: 30px;
+        text-align: center;
+        width: 100%
+    }
+</style>
+<!--中间开始-->
+<div id="content">
+    <div class="list">
+        <div class="main">
+            <h4 class="listoption">
+                <a href="{:U('home/index/index')}">首页</a>
+                <if condition="$mbData">&gt;<span>{$mbData}</span></if>
+                <foreach name="fatherData" item="vo">
+                    &gt;<a href="{:U('home/lists/index',['cid'=>$vo['cid']])}">{$vo['cname']}</a>
+                </foreach>
+            </h4>
+            <style>
+                .list .postion dl dd a.red {
+                    color: red;
+                }
+            </style>
+
+            <div class="postion">
+                <foreach name="finalTemp" key="k" item="v">
+                    <?php
+								$temp = $param;
+								//为了不限准备
+								$temp[$k]=0;
+							?>
+                    <dl>
+                        <dt>{$v['name']}:</dt>
+
+                        <dd>
+                            <a <if condition="$param[$k]==0">class="red"</if> href="{:u('home/lists/index',['cid'=>$_GET['cid'],'param'=>implode('_',$temp),'p'=>$_GET['p']])}">不限</a>
+                            <foreach name="v['value']" item="vo">
+                                <?php $temp[$k]=$vo['gaid']?>
+                                <a <if condition="$param[$k]==$vo['gaid']">class="red"</if> href="{:u('home/lists/index',['cid'=>$_GET['cid'],'param'=>implode('_',$temp),'p'=>$_GET['p']])}">{$vo['gavalue']}</a>
+                            </foreach>
+                        </dd>
+                    </dl>
+                </foreach>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="listcontent">
+        <div class="main">
+            <ul>
+                <if condition="!$data">
+                    <dl class="msg">
+                        <dt class="fault-anzai"></dt>
+                        <dd class="contz">
+                            抱歉，没有找到您搜索的相关商品
+                        </dd>
+                    </dl>
+                </if>
+
+
+                <foreach name="data" item="vo" >
+                    <li>
+                        <div class="listdesc">
+                            <dl class="desc">
+                                <a href="{:u('home/content/index',['gid'=>$vo['gid']])}" class="pro_list">
+                                    <dt class="pic"><img class="lazy" src="__ROOT__/{$vo['pic']}" alt="360手机f4标准版移动4G魔力白"></dt>
+                                    <dd class="cont">
+                                        <span class="title">{$vo['gname']}</span>
+                                         <span class="price">{$vo['shopprice']}元</span>
+                                    </dd>
+                                </a>
+                                <dd class="btns">
+                                    <a href="javascript:;" class="add-cart" gid="{$vo['gid']}"><i></i><em>加入购物车</em></a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                </foreach>
+            </ul>
+        </div>
+
+    </div>
+</div>
+</div>
+
+
+<script src="__PUBLIC__/home/js/jquery.fly.min.js"></script>
+<script>
+    $(function() {
+        var offset = $(".topshopcart").offset();  //结束的地方的元素
+        $(".add-cart").click(function(event){
+            var gid = $(this).attr('gid');
+            var THIS=this;
+            var addcar = $(this);
+            var img = addcar.parents('.desc').find('.pic img').attr('src');
+            var flyer = $('<img  class="u-flyer" src="'+img+'">');
+            flyer.fly({
+                start: {
+                    left: event.pageX,
+                    top: event.pageY
+                },
+                end: {
+                    left: offset.left+10,
+                    top: offset.top+10,
+                    width: 0,
+                    height: 0
+                },
+                onEnd: function(){
+                    $.post('{:U("home/content/ajaxGetCart")}',{gid:gid,lists:1},function (res) {
+                        if (res.valid==1){
+                            location.reload();
+                        }else {
+                            layer.msg(res.message, function(){
+                            });
+                        }
+                    })
+                }
+            });
+        });
+
+    });
+</script>
+<!--中间结束-->

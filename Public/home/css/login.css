@@ -1,0 +1,21 @@
+﻿.qrswitch { position: absolute; right: 0; z-index: 100; }
+.qrswitch_logo { position: absolute; right: 10px; width: 51px; height: 77px; background: url(../images/pull_2.gif) no-repeat; outline: none; *hide-focus: expression(this.hideFocus=true); }
+.qrswitch_logo_qr { position: absolute; right: 20px; width: 40px; height: 50px; background: url(../images/pull_3.gif) no-repeat; outline: none; *hide-focus: expression(this.hideFocus=true); }
+.qrswitch_logo_click { position: absolute; right: 5px; width: 27px; height: 54px; background: url(../images/icon_2.png) no-repeat -228px -185px; outline: none; *hide-focus: expression(this.hideFocus=true); }
+.qrlogin { position: relative; width: 488px; height: 265px; background: url(../images/qr_bg.png) repeat; font-size: 14px; }
+    .qrlogin #qrlogin_step2, .qrlogin #qrlogin_step3 { display: none; }
+    .qrlogin .qr_step { position: relative; height: 230px; }
+    .qrlogin .qr_tips { height: 18px; width: 100%; text-align: center; position: absolute; top: 35px; }
+    .qrlogin .qr_link { color: #75c429; font-weight: bolder; margin: 0 8px; }
+    .qrlogin .qrlogin_bg { width: 150px; height: 96px; background: url(../images/qr.png) no-repeat 0 0; position: absolute; top: 88px; left: 105px; _background: none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/qr_1_ie6.png',sizingMethod="crop"); }
+    .qrlogin .qrlogin_img { width: 110px; height: 110px; position: absolute; right: 80px; top: 80px; }
+    .qrlogin .kao { width: 305px; height: 140px; position: absolute; top: 80px; left: 100px; background: url(../images/qr.png) no-repeat -162px 0; _background: none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/qr_2_ie6.png',sizingMethod="crop"); }
+    .qrlogin .qr_login_tips_logo { display: inline-block; width: 18px; height: 18px; background: url(../images/icon_2.png) no-repeat -20px -163px; }
+    .qrlogin .qr_login_tips_wording { display: inline-block; height: 18px; line-height: 18px; color: #88c552; }
+    .qrlogin .qr_card { width: 260px; height: 100px; margin: 0 auto; position: absolute; top: 80px; left: 112px; }
+    .qrlogin .qr_head { width: 80px; height: 80px; position: absolute; top: 9px; left: 12px; border: 1px solid #fff; border-radius: 2px; }
+    .qrlogin .qr_nick { position: absolute; left: 120px; top: 15px; font-size: 14px; color: #02B0AD; font-weight: bold; width: 120px; overflow: hidden; height: 20px; line-height: 18px; }
+    .qrlogin .qr_uin { position: absolute; left: 120px; top: 40px; color: #607785; font-weight: bold; }
+    .qrlogin .qr_feeds { position: absolute; left: 120px; bottom: 20px; color: #607785; height: 18px; line-height: 18px; overflow: hidden; }
+#loginStart { cursor: pointer; color: #266392; font-size: 2em; }
+#_login_div_quick_ { position: absolute; z-index: 20000; width: 490px; height: 327px; display: none; font-size: 12px; }

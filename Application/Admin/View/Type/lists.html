@@ -1,0 +1,59 @@
+<layout name="master" />
+<ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a href="{:u('admin/index/index')}"><i class="fa fa-home"></i> Home</a></li>
+
+    <li class="active">类型列表</li>
+</ul>
+<div class="m-b-md">
+    <h3 class="m-b-none">类型列表</h3>
+</div>
+<section class="scrollable wrapper">
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>类型ID</th>
+            <th>类型名称</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach  name="type" item="vo">
+        <tr>
+            <td>{$vo['tid']}</td>
+            <td>{$vo['type']}</td>
+            <td>
+                <div class="btn-group">
+                    <a href="{:u('admin/Typeattribute/lists',['tid'=>$vo['tid']])}" class="btn btn-warning">编辑类型属性</a>
+                    <a href="{:u('admin/type/add',['tid'=>$vo['tid']])}" class="btn btn-primary">编辑</a>
+                    <a href="javascript:;" onclick="del({$vo['tid']})" class="btn btn-danger">删除</a>
+                </div>
+            </td>
+        </tr>
+        </foreach>
+
+        </tbody>
+    </table>
+    <style>
+        .pagination >li > a {
+            position: relative;
+            float: left;
+            padding: 6px 12px;
+            margin-left: -1px;
+            line-height: 1.42857143;
+            color: #337ab7;
+            text-decoration: none;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+    </style>
+    {$page}
+</section>
+
+<script>
+    function del(tid) {
+        util.confirm('确定删除吗?',function(){
+            location.href = '__ROOT__/admin/type/del?tid='+tid;
+        })
+    }
+</script>

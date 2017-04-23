@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{$title}</title>
+    <link rel="icon" type="text/css" href="__PUBLIC__/home/shop.ico"/>
+    <foreach name="cs" item="v">
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/{$v}.css"/>
+    </foreach>
+    <script src="__PUBLIC__/home/js/jquery-1.10.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var ajaxGetUinfo = "<?php echo U('home/account/ajaxGetUinfo')?>";
+    </script>
+    <script src="__PUBLIC__/layer/layer.js"></script>
+    <foreach name="js" item="vo">
+        <script src="__PUBLIC__/home/js/{$vo}.js" type="text/javascript" charset="utf-8"></script>
+    </foreach>
+</head>
+<body>
+<!--头部开始-->
+<div id="top">
+    <!--头部灰条就开始-->
+    <div class="topbox">
+        <div class="main">
+            <div class="topleft fl">
+                <a href="{:U('home/index/index')}">欢迎来到天使商城</a>
+                <script>
+                    function AddFavorite(sURL, sTitle)
+                    {
+
+                        try
+                        {
+                            window.external.addFavorite(sURL, sTitle);
+                        }
+                        catch (e)
+                        {
+                            try
+                            {
+                                window.sidebar.addPanel(sTitle, sURL, "");
+                            }
+                            catch (e)
+                            {
+                                alert("加入收藏失败，请使用Ctrl+D进行添加");
+                            }
+                        }
+                    }
+                    //设为首页 <a onclick="SetHome(this,window.location)">设为首页</a>
+                    function SetHome(obj,vrl){
+                        try{
+                            obj.style.behavior='url(#default#homepage)';obj.setHomePage(vrl);
+                        }
+                        catch(e){
+                            if(window.netscape) {
+                                try {
+                                    netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+                                }
+                                catch (e) {
+                                    alert("此操作被浏览器拒绝！\n请在浏览器地址栏输入“about:config”并回车\n然后将 [signed.applets.codebase_principal_support]的值设置为'true',双击即可。");
+                                }
+                                var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
+                                prefs.setCharPref('browser.startup.homepage',vrl);
+                            }
+                        }
+                    }
+                </script>
+                <a  href="javascript:;" onclick="SetHome(this,window.location)" >设为首页</a>
+                <a  href="javascript:;"    onclick="AddFavorite(window.location,document.title)"  >收藏本站</a>
+            </div>
+            <div class="topright fr">
+                <if condition="!isset($_SESSION['puid'])">
+                    <div class="login fl">
+                        <a href="{:U('home/login/index')}">登录</a>
+                        <a href="{:U('home/login/reg')}">注册</a>
+                    </div>
+                    <else/>
+                    <div class="login fl">
+                        <i style="color: white;">尊敬的会员:</i><i style="color: red;">{:session('pusername')}</i><i
+                            style="color: white;">,欢迎您的大驾光临！</i>
+                        <a href="{:U('home/login/out')}" style="color: red"> 退出</a>
+
+                    </div>
+                </if>
+                <span class="fl">|</span>
+                <div class="fcode fl">
+
+                    <a href="{:U('home/orderList/index')}">我的订单</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--头部灰条结束-->
+    <!--logo区域开始-->
+    <div class="logoRegion">
+        <div class="main">
+            <div class="logo">
+                <a href="{:U('home/index/index')}"><img src="__PUBLIC__/home/images/timg.jpeg"/></a>
+            </div>
+            <div class="seachRegion">
+                <div class="seach fl">
+                    <form action="" method="post" onsubmit="return searchgoods(this)" >
+                        <if condition="$seach_waq">
+                            <input type="text" class="seachtxt fl" value="{$seach_waq}"/>
+
+                            <else/>
+                        <input type="text" class="seachtxt fl" value="手机"/>
+                        </if>
+                        <input type="submit" class="btn" value=""/>
+                    </form>
+                    <script>
+                        function searchgoods() {
+                            location.href = "{:u('home/lists/index')}"+'?p='+$('.seachtxt').val();
+                            return false;
+                        }
+                    </script>
+                    <p class="searchkey">
+                        <volist name="allGoodsData" id="vzv" offset="0" length='2'>
+                        <a href="{:U('home/content/index',['gid'=>$vzv['gid']])}">{$vzv['gname']}</a>
+                        </volist>
+                    </p>
+
+                </div>
+                <style>
+                    .cart-tips ul {
+                        display: block;
+                        padding: 6px 12px;
+                        background: #fff;
+                        font-size: 12px;
+                    }
+
+                    .cart-tips ul li {
+                        display: block;
+                        height: 72px;
+                        line-height: 72px;
+                        padding: 6px 0;
+                        border-top: none;
+                        list-style: none;
+                        border-top: 1px solid #ddd;
+                    }
+
+                    .cart-tips ul li:nth-of-type(1) {
+
+                        border-top: none;
+                    }
+
+                    .cart-tips ul li img {
+                        float: left;
+                    }
+
+                    .cart-tips ul li .mccs {
+                        float: left;
+                        line-height: 20px;
+                        width: 140px;
+                    }
+
+                    .cart-tips ul li .cart_pr {
+                        color: #333;
+                        float: left;
+                        height: 100%;
+                        text-align: right;
+                        width: 60px;
+                    }
+
+                    .cart-tips ul li .cart_nb {
+                        color: #333;
+                        float: left;
+                        height: 100%;
+                        text-align: center;
+                        width: 60px;
+                    }
+
+                    .cart-tips ul li .mccs strong {
+                        display: table-cell;
+                        font-weight: 400;
+                        height: 72px;
+                        overflow: hidden;
+                        vertical-align: middle;
+                    }
+
+                    .cart-count {
+                        background: #f6f6f6;
+                        color: #31373c;
+                        font-size: 12px;
+                        height: 40px;
+                        line-height: 40px;
+                        padding: 10px 15px 10px 20px;
+                    }
+
+                    .cart_count_left {
+                        display: block;
+                        width: 100%;
+                        float: left;
+                    }
+
+                    .cart_count_left a {
+                        display: block;
+                        background: #30ab38;
+                        border-radius: 2px;
+                        color: #fff;
+                        float: right;
+                        font-size: 14px;
+                        height: 40px;
+                        line-height: 40px;
+                        text-align: center;
+                        width: 120px;
+                    }
+                    .cart_count_left a:hover{
+                        color: red;
+                    }
+                </style>
+                <?php if(!isset($mynameiscart) && $mynameiscart!=123){?>
+                <div n="{}" class="topshopcart fr">
+                    <a href="{:U('home/cart/index')}" class="header-cart"><i></i>我的购物车<span class="cart-size"
+                                                                                            style="color: red">  (<span class="allnum"><if
+                            condition="$_SESSION['cart']['total_rows']==0">0<else/>{$_SESSION['cart']['total_rows']} </if></span>) </span></a>
+
+                    <div class="cart-tips">
+                            <if condition="$_SESSION['cart']['total_rows']==0">
+                                您的购物车暂无商品，赶紧去选购吧！
+                                <else/>
+                                <ul>
+                                    <foreach name="_SESSION['cart']['goods']" key="k" item="vo">
+                                        <li>
+                                            <img src="__ROOT__/{$vo['options']['img']}"
+                                                 style="width: 72px;height: 72px;" alt="">
+                                            <span class="mccs"><strong>{$vo['name']}（<foreach
+                                                    name="vo['options']['options']" item="vv"
+                                                    key="kk">{$kk}:{$vv} </foreach>）</strong></span>
+                                            <span class="cart_pr">
+                                    <span>￥</span>
+                                    {$vo['price']}
+                                </span>
+                                            <span class="cart_nb">×{$vo['num']}</span>
+                                            <a href="javascript:;" momey="{$vo['total']}" num="{$vo['num']}"
+                                               aq_sid="{$k}">X</a>
+                                        </li>
+                                    </foreach>
+                                </ul>
+                                <div class="cart-count">
+                            <span class="cart_count_left">共<b class="cart_num_aq" style="color: red;">{$_SESSION['cart']['total_rows']}</b>件商品 总价<b
+                                    style="color: red;">￥</b><span
+                                    style="color: red">{$_SESSION['cart']['total']}</span>
+                                <a href="{:U('home/cart/index')}">去购物车</a>
+                            </span>
+                                </div>
+                                <script>
+                                    $('.cart-tips ul li a').click(function () {
+                                        //获取商品的id
+                                        var sid = $(this).attr('aq_sid');
+                                        var THIS = $(this);
+                                        //获取当前商品总价格
+                                        var oldmomey = parseInt($(this).attr('momey'));
+                                        //抓住当前商品的数量
+                                        var cartnum = parseInt(THIS.attr('num'));
+                                        //获取商品总价
+                                        var allmomey = parseInt($('.cart-count .cart_count_left span').html());
+                                        $.post("{:U('home/cart/delShops')}", {goodid: sid}, function (res) {
+                                            if (res == 1) {
+                                                //获取原来的总数量
+                                                var cartallnum = parseInt($('.topshopcart .header-cart .cart-size .allnum').html());
+                                                //新数量等于旧总数量减去当前的商品数量
+                                                var newcartnum = cartallnum - cartnum;
+                                                //判断购物车内是否还有商品。
+                                                if (newcartnum == 0) {
+                                                    //如果没有修改小购物车的内容
+                                                    $('.topshopcart .cart-tips').html('您的购物车暂无商品，赶紧去选购吧！')
+                                                }
+                                                //修改购物车内的数量数据
+                                                $('.topshopcart .header-cart .cart-size .allnum').html(newcartnum);
+                                                $('.cart-count .cart_count_left .cart_num_aq').html(newcartnum);
+                                                //获取删除商品后的新价格
+                                                var newmomey = allmomey - oldmomey;
+                                                //编辑新价格
+                                                $('.cart-count .cart_count_left span').html(newmomey)
+                                                //移除当前元素
+                                                THIS.parents('li').remove();
+                                            }
+                                        }, 'json')
+                                    })
+                                </script>
+                            </if>
+                    </div>
+                </div>
+                <?php }?>
+            </div>
+
+        </div>
+    </div>
+    <!--logo区域结束-->
+    <!--导航开始-->
+    <div class="navbox">
+        <div class="main">
+            <h5 class="fl"><a href="{:U('home/lists/index')}"><i></i>全部智能酷品</a></h5>
+            <ul class="menu fl">
+                <volist name="cid" id="topvo" key="k" offset="0" length='4'>
+                <li class="menulist">
+                    <a href="{:U('home/lists/index',['cid'=>$topvo])}">{:M('category')->where("cid=$topvo")->getField('cname')}</a>
+                    <div class="menuHiden">
+                        <ul class="product">
+                            <?php $path = 'data'.($k-1);$cidData = $$path;?>
+                            <volist name="cidData" id="topvo" key="aq_kk" offset="0" length='6'>
+                            <li>
+                                <a href="{:U('home/content/index',['gid'=>$topvo['gid']])}">
+                                    <img src="__ROOT__/{$topvo['pic']}" alt=""/>
+                                </a>
+                                <span style="display: block;width:150px;color: red; text-align: center; font-size: 10px">￥{$topvo['shopprice']}</span>
+
+                            </li>
+                            </volist>
+                        </ul>
+                    </div>
+                </li>
+                </volist>
+            </ul>
+
+        </div>
+        <if condition="CONTROLLER_NAME=='Index'">
+            <div class="main hiden">
+                <div class="navHidden">
+                    <ul class="list2">
+                        <volist name="cateData" id="vo" offset="0" length='8'>
+                            <li>
+                                <a href="{:U('home/lists/index',['cid'=>$vo['cid']])}"><i></i>{$vo['cname']}</a>
+                                <div class="listhide">
+                                    <div class="contentOne">
+                                        <volist name="vo['_data']" id="v" offset="0" length='7'>
+                                            <dl>
+                                                <dt><a href="{:U('home/lists/index',['cid'=>$v['cid']])}">{$v['cname']}&gt;</a>
+                                                </dt>
+                                                <volist name="v['_data']" id="vv" offset="0" length='9'>
+                                                    <dd>
+                                                        <a href="{:U('home/lists/index',['cid'=>$vv['cid']])}"
+                                                           class="noo">{$vv['cname']}</a>
+                                                    </dd>
+                                                </volist>
+                                            </dl>
+                                        </volist>
+                                    </div>
+                                </div>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+                <!--两张图-->
+                <!--<div class="topad">-->
+                    <!--<div class="righttopad">-->
+                        <!--<a href=""><img src="__PUBLIC__/home/images/right.png"/></a>-->
+                    <!--</div>-->
+                    <!--<div class="righttopad">-->
+                        <!--<a href=""><img src="__PUBLIC__/home/images/right.png"/></a>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+        </if>
+    </div>
+    <!--导航结束-->
+    <div class="clear"></div>
+
+    <?php if(CONTROLLER_NAME=='Index'){ ?>
+    <!--banner开始-->
+    <div class="banner">
+        <ul class="pic">
+            <li style='background: url("__PUBLIC__/home/images/lb1.jpg") no-repeat center center;'>
+                <a href="{:U('home/content/index',['gid'=>44])}"></a>
+            </li>
+            <li style="background: url(__PUBLIC__/home/images/lb2.jpg) no-repeat center center;">
+                <a href="{:U('home/content/index',['gid'=>1])}"></a>
+            </li>
+            <li style="background: url(__PUBLIC__/home/images/lb3.jpg) no-repeat center center;">
+                <a href="{:U('home/content/index',['gid'=>45])}"></a>
+            </li>
+            <li style="background: url(__PUBLIC__/home/images/lb4.jpg) no-repeat center center;">
+                <a href="{:U('home/content/index',['gid'=>46])}"></a>
+            </li>
+            <li style="background: url(__PUBLIC__/home/images/lb5.jpg) no-repeat center center;">
+                <a href="{:U('home/content/index',['gid'=>44])}"></a>
+            </li>
+
+        </ul>
+        <ul class="dot">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <span class="prev"></span><span class="next"></span>
+    </div>
+    <!--banner结束-->
+    <?php }?>
+</div>
+<!--头部结束-->
+
+
+{__CONTENT__}
+
+<!--尾部开始-->
+<div class="mod-footer">
+    <div class="foot-bannerw">
+        <div class="foot-banner clearfix">
+            <div class="banner-item">
+                <a href="#" target="_blank" data-monitor="home_foot_days7"><i class="icon1">7</i>7天无理由退货</a>
+            </div>
+            <div class="banner-item">
+                <a href="#" target="_blank" data-monitor="home_foot_days15"><i class="icon2">15</i>15天免费换货</a>
+            </div>
+            <div class="banner-item"><i class="icon3">包</i>满99元包邮</div>
+            <div class="banner-item">
+                <a href="#" target="_blank" data-monitor="home_foot_moblie"><i class="icon4">服</i>手机特色服务</a>
+            </div>
+        </div>
+    </div>
+    <div class="foot-containerw">
+        <div class="foot-container clearfix">
+            <dl class="foot-con">
+                <dt data-monitor="home_foot_freshman">前端项目</dt>
+                <dd data-monitor="home_help_freshman">
+                    <a target="_blank" href="http://www.weilezy.com/mt/index.html" rel="nofollow">我的美团</a>
+                </dd>
+                <dd>
+                    <a target="_blank" href="http://www.weilezy.com/jd/index.html" rel="nofollow">我的京东</a>
+                </dd>
+                <dd>
+                    <a target="_blank" href="http://www.weilezy.com/small/index.html" rel="nofollow">微场景开发</a>
+                </dd>
+                <dd>
+                    <a target="_blank" href="http://www.weilezy.com/weixinduan/index.html" rel="nofollow">angularjs前后端交互</a>
+                </dd>
+                <dd>
+                    <a target="_blank" href="http://www.weilezy.com/angular/index.html" rel="nofollow">响应式页面开发</a>
+                </dd>
+            </dl>
+            <dl class="foot-con">
+                <dt data-monitor="home_foot_help">php项目</dt>
+                <dd data-monitor="home_help_help">
+                    <a target="_blank" href="http://www.weilezy.com/angular/index.html">商城项目</a>
+                </dd>
+                <dd>
+                    <a target="_blank" href="http://www.weilezy.com/myblog/index.html" rel="nofollow">个人博客1</a>
+                </dd>
+                <dd>
+                    <a target="_blank" href="http://www.weilezy.com/blog/index.html" rel="nofollow">个人博客2</a>
+                </dd>
+
+            </dl>
+
+
+        </div>
+    </div>
+    <div class="footer-copyright">天使商城 ©2017-2018 安琪版权所有 </div>
+</div>
+<!--尾部结束-->
+<!--右边底部返回顶部-->
+<div class="slidebar" id="slidebar">
+    <ul>
+        <li class="topback">
+            <a href="javascript:;"></a>
+        </li>
+    </ul>
+</div>
+<!--右边底部返回顶部结束-->
+</body>
+
+</html>

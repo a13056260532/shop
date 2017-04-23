@@ -1,0 +1,84 @@
+<layout name="master" />
+<ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a href="{:u('admin/index/index')}"><i class="fa fa-home"></i> Home</a></li>
+
+    <li class="active">品牌添加</li>
+</ul>
+<div class="m-b-md">
+    <h3 class="m-b-none">品牌添加</h3>
+</div>
+<div class="row" ng-controller="ctrl">
+    <div class="col-sm-12">
+        <section class="panel panel-default">
+            <header class="panel-heading font-bold">品牌添加</header>
+            <div class="panel-body">
+                <form role="form" action="" method="post">
+                    <div class="form-group">
+                        <label>品牌名称</label>
+                        <input type="text" class="form-control" value="{$oldData['bname']}"   name="bname">
+                    </div>
+
+                    <div class="form-group">
+                        <label>品牌LOGO</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="logo" readonly="" value="{$oldData['logo']}">
+                            <div class="input-group-btn">
+                                <button onclick="upImage(this)" class="btn btn-default" type="button">选择图片</button>
+                            </div>
+                        </div>
+                        <div class="input-group" style="margin-top:5px;">
+                            <img src="<?php if(isset($_GET['bid'])){?>__ROOT__/<?php echo $oldData['logo']; }else{?>__PUBLIC__/images/nopic.jpg<?php }?>" class="img-responsive img-thumbnail" width="150">
+                            <em class="close" style="position:absolute; top: 0px; right: -14px;" title="删除这张图片" onclick="removeImg(this)">×</em>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>排序</label>
+                        <input type="number" class="form-control" value="{$oldData['rank']}"   name="rank">
+                    </div>
+                    <div class="form-group">
+                        <label>是否热门</label>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="heat"  value="1" <?php if($oldData['heat']==1){?> checked="checked" <?php }?>>
+                                是
+                            </label>
+                            <label>
+                                <input type="radio" name="heat"  value="0"  <?php if($oldData['heat']==0){?> checked="checked" <?php }?>>
+                                否
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-success">点击添加</button>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+    //上传图片
+    function upImage(obj) {
+        require(['util'], function (util) {
+            options = {
+                multiple: false,//是否允许多图上传
+                //data是向后台服务器提交的POST数据
+                data:{name:'王安琪',year:2099},
+            };
+            util.image(function (images) {          //上传成功的图片，数组类型 
+                $("[name='logo']").val(images[0]);
+                $(".img-thumbnail").attr('src', '__ROOT__/'+images[0]);
+            }, options)
+        });
+    }
+
+    //移除图片
+    function removeImg(obj) {
+        $(obj).prev('img').attr('src', '__PUBLIC__/images/nopic.jpg');
+        $(obj).parent().prev().find('input').val('');
+    }
+</script>
+<script>
+    function controller($scope, $, _) {
+
+    }
+</script>
